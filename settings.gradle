@@ -1,0 +1,5 @@
+rootProject.name = 'Tello_System'
+include 'Common'
+include 'Flier'
+include 'Simulator'
+
