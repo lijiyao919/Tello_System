@@ -1,7 +1,7 @@
 public class Takeoff extends Action{
     @Override
-    public byte[] doAction() {
+    public String getRequest() {
         String request = "takeoff";
-        return convertStringToBytes(request);
+        return request;
     }
 }

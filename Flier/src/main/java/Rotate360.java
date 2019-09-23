@@ -1,7 +1,7 @@
 public class Rotate360 extends Action{
     @Override
-    public byte[] doAction() {
+    public String getRequest() {
         String request = "cw 360";
-        return convertStringToBytes(request);
+        return request;
     }
 }

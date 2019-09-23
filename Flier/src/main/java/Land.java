@@ -1,7 +1,7 @@
 public class Land extends Action{
     @Override
-    public byte[] doAction() {
+    public String getRequest() {
         String request = "land";
-        return convertStringToBytes(request);
+        return request;
     }
 }

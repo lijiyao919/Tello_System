@@ -1,7 +1,7 @@
 public class Left200 extends Action{
     @Override
-    public byte[] doAction() {
+    public String getRequest() {
         String request = "left 200";
-        return convertStringToBytes(request);
+        return request;
     }
 }

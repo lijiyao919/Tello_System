@@ -31,5 +31,58 @@ public abstract class Mission {
         }
         return Boolean.FALSE;
     }
-    public abstract Boolean executeMission(TelloComm tc) throws Exception;
+
+    protected Boolean enterCommandMode(TelloComm tc) throws Exception {
+        Boolean result = Boolean.FALSE;
+        Action act;
+
+        System.out.println("Put drone in command mode...");
+        act = new Command();
+        result=executeBasicMission(tc, act);
+        return result;
+    }
+
+    protected Boolean doTakeOff(TelloComm tc) throws Exception {
+        Boolean result = Boolean.FALSE;
+        Action act;
+
+        System.out.println("Put drone in command mode...");
+        act = new Takeoff();
+        result=executeBasicMission(tc, act);
+        Thread.sleep(5000);
+        return result;
+    }
+
+    protected Boolean doLand(TelloComm tc) throws Exception {
+        Boolean result = Boolean.FALSE;
+        Action act;
+
+        System.out.println("Put drone in command mode...");
+        act = new Land();
+        result=executeBasicMission(tc, act);
+        Thread.sleep(5000);
+        return result;
+    }
+
+    protected abstract Boolean doCustomizedMissions(TelloComm tc) throws Exception;
+
+    public Boolean executeMission(TelloComm tc) throws Exception{
+        if(enterCommandMode(tc) == Boolean.FALSE){
+            return Boolean.FALSE;
+        }
+
+        if(doTakeOff(tc) == Boolean.FALSE){
+            return Boolean.FALSE;
+        }
+
+        if(doCustomizedMissions(tc) == Boolean.FALSE){
+            return Boolean.FALSE;
+        }
+
+        if(doLand(tc) == Boolean.FALSE){
+            return Boolean.FALSE;
+        }
+
+        return Boolean.TRUE;
+    }
 }

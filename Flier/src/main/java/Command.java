@@ -1,7 +1,7 @@
 public class Command extends Action{
     @Override
-    public byte[] doAction() {
+    public String getRequest() {
         String request = "command";
-        return convertStringToBytes(request);
+        return request;
     }
 }
