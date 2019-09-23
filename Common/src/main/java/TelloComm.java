@@ -20,12 +20,9 @@ public class TelloComm {
         System.out.println("Sent bytes to " + droneAddress.toString() + ":" + dronePort);
     }
 
-    public Boolean receiveMsg() throws Exception{
+    public DatagramPacket receiveMsg(byte[] bytesReceived) throws Exception{
         DatagramPacket datagramPacket;
-        byte[] bytesReceived;
-        String reply = null;
 
-        bytesReceived = new byte[64];
         datagramPacket = new DatagramPacket(bytesReceived, 64);
         try {
             udpClient.receive(datagramPacket);
@@ -33,19 +30,6 @@ public class TelloComm {
         catch (SocketTimeoutException ex) {
             datagramPacket = null;
         }
-        if (datagramPacket != null) {
-            System.out.println(String.format("Received %d bytes", datagramPacket.getLength()));
-            reply = new String(bytesReceived, 0, datagramPacket.getLength(), StandardCharsets.UTF_8);
-            System.out.println("Receive " + reply);
-            if (reply.equals("ok")) {
-                return Boolean.TRUE;
-            }
-            else{
-                return Boolean.FALSE;
-            }
-        }
-        else{
-            return Boolean.FALSE;
-        }
+        return datagramPacket;
     }
 }
