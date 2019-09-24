@@ -13,6 +13,20 @@ public abstract class Message {
 
             if (data.startsWith(Status.getKeyWord()))
                 message = new Status(data);
+            else if (data.startsWith(Command.getKeyWord()))
+                message = new Command();
+            else if (data.startsWith(TakeOff.getKeyWord()))
+                message = new TakeOff();
+            else if (data.startsWith(Land.getKeyWord()))
+                message = new Land();
+            else if (data.startsWith(Left.getKeyWord()))
+                message = new Left(data);
+            else if (data.startsWith(Right.getKeyWord()))
+                message = new Right(data);
+            else if (data.startsWith(Rotate.getKeyWord()))
+                message = new Rotate(data);
+            else
+                message = new Reply(data);
 
             // TODO: decode all of the other kinds of messages based on what the message starts with.  If it doesn't
             //       start with a recognized key work, assume it is an info message (i.e., a reply to a query)

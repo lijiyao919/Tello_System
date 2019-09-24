@@ -2,12 +2,12 @@ public class Mission2 extends Mission {
     @Override
     public Boolean doCustomizedMissions(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
-        Action act;
+        Message msg;
 
         //-------- right ---------
         System.out.println("Right 200...");
-        act = new Right200();
-        result = executeBasicMission(tc, act);
+        msg = new Right("right 200");
+        result = executeBasicMission(tc, msg);
         if(result == Boolean.FALSE) {
             return Boolean.FALSE;
         }
@@ -15,8 +15,8 @@ public class Mission2 extends Mission {
 
         //-------- left ---------
         System.out.println("Left 200...");
-        act = new Left200();
-        result = executeBasicMission(tc, act);
+        msg = new Left("left 200");
+        result = executeBasicMission(tc, msg);
         if(result == Boolean.FALSE) {
             return Boolean.FALSE;
         }

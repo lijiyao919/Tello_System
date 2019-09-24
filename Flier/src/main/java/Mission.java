@@ -2,7 +2,7 @@ import java.net.DatagramPacket;
 import java.nio.charset.StandardCharsets;
 
 public abstract class Mission {
-    protected Boolean executeBasicMission(TelloComm tc, Action act) throws Exception{
+    protected Boolean executeBasicMission(TelloComm tc, Message msg) throws Exception{
         byte[] bytesToSent;
         byte[] bytesReceived = new byte[64];
         DatagramPacket datagramPacket;
@@ -10,7 +10,7 @@ public abstract class Mission {
         String reply = null;
 
         while (maxRetries > 0) {
-            bytesToSent = act.doAction();
+            bytesToSent = msg.encode();
             tc.sendMsg(bytesToSent);
             datagramPacket = tc.receiveMsg(bytesReceived);
             if (datagramPacket != null) {
@@ -34,32 +34,32 @@ public abstract class Mission {
 
     protected Boolean enterCommandMode(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
-        Action act;
+        Message msg;
 
         System.out.println("Put drone in command mode...");
-        act = new Command();
-        result=executeBasicMission(tc, act);
+        msg = new Command();
+        result=executeBasicMission(tc, msg);
         return result;
     }
 
     protected Boolean doTakeOff(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
-        Action act;
+        Message msg;
 
         System.out.println("Put drone in command mode...");
-        act = new Takeoff();
-        result=executeBasicMission(tc, act);
+        msg = new TakeOff();
+        result=executeBasicMission(tc, msg);
         Thread.sleep(5000);
         return result;
     }
 
     protected Boolean doLand(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
-        Action act;
+        Message msg;
 
         System.out.println("Put drone in command mode...");
-        act = new Land();
-        result=executeBasicMission(tc, act);
+        msg = new Land();
+        result=executeBasicMission(tc, msg);
         Thread.sleep(5000);
         return result;
     }

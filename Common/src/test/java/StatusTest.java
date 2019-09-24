@@ -1,6 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class StatusTest {
     @Test
     public void testConstructorWithOneParameter(){
@@ -61,15 +63,35 @@ public class StatusTest {
     @Test
     public void testGetMessageTextByConstructorWithMultipleParameters(){
         Status sta = new Status(10,60,30,20,20,20,70,
-                                100,100,50,70,30.0,
-                                50,10.0,10.0,10.0);
+                100,100,50,70,30.0,
+                50,10.0,10.0,10.0);
         String expectedResult = "mid:-1;x:0;y:0;z:0;mpry:0,0,0;pitch:10;roll:60;yaw:30;"+
-                         "vgx:20;vgy:20;vgz:20;"+
-                         "templ:70;temph:100;"+
-                         "tof:100;h:50;"+
-                         "bat:70;baro:30.0;"+
-                         "time:50;"+
-                         "agx:10.0;agy:10.0;agz:10.0";
+                "vgx:20;vgy:20;vgz:20;"+
+                "templ:70;temph:100;"+
+                "tof:100;h:50;"+
+                "bat:70;baro:30.0;"+
+                "time:50;"+
+                "agx:10.0;agy:10.0;agz:10.0";
         Assert.assertEquals(expectedResult, sta.getMessageText());
+    }
+
+    @Test
+    public void testEncodeAndDecodeStatusMsg(){
+        String msg = "mid:-1;x:0;y:0;z:0;mpry:0,0,0;pitch:10;roll:60;yaw:30;"+
+                "vgx:20;vgy:20;vgz:20;"+
+                "templ:70;temph:100;"+
+                "tof:100;h:50;"+
+                "bat:70;baro:30.00;"+
+                "time:50;"+
+                "agx:10.00;agy:10.00;agz:10.10";
+        byte[] encodeMsg;
+        Message decodeMsg;
+
+        Status sta = new Status(msg);
+        encodeMsg = sta.encode();
+        decodeMsg = Status.decode(encodeMsg, 0, 1000);
+
+        Assert.assertEquals(msg, decodeMsg.getMessageText());
+
     }
 }
