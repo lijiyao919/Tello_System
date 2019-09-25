@@ -4,20 +4,19 @@ import java.nio.charset.StandardCharsets;
 public abstract class Mission {
     protected Boolean executeBasicMission(TelloComm tc, Message msg) throws Exception{
         byte[] bytesToSent;
-        byte[] bytesReceived = new byte[64];
-        DatagramPacket datagramPacket;
+        byte[] bytesReceived ;
         int maxRetries = 3;
-        String reply = null;
+        Message reply;
 
         while (maxRetries > 0) {
             bytesToSent = msg.encode();
-            tc.sendMsg(bytesToSent);
-            datagramPacket = tc.receiveMsg(bytesReceived);
-            if (datagramPacket != null) {
-                System.out.println(String.format("Received %d bytes", datagramPacket.getLength()));
-                reply = new String(bytesReceived, 0, datagramPacket.getLength(), StandardCharsets.UTF_8);
-                System.out.println("Receive " + reply);
-                if (reply.equals("ok")) {
+            tc.sendMsg(bytesToSent, "127.0.0.1", 8889);
+            bytesReceived = tc.receiveMsg();
+            if (bytesReceived != null) {
+                System.out.println(String.format("Received %d bytes", bytesReceived.length));
+                reply = Status.decode(bytesReceived, 0, 1000);
+                System.out.println("Receive " + reply.getMessageText());
+                if (reply.getMessageText().equals("ok")) {
                     return Boolean.TRUE;
                 }
                 else{

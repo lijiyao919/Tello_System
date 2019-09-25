@@ -7,21 +7,25 @@ public class TelloComm {
     private int dronePort;
 
     public TelloComm(InetAddress address, int port) throws Exception{
-        udpClient =  new DatagramSocket();
+        udpClient =  new DatagramSocket(port);
         droneAddress = address;
         dronePort = port;
         udpClient.setSoTimeout(1000);
     }
 
-    public void sendMsg(byte[] bytesToSent) throws Exception{
+    public void sendMsg(byte[] bytesToSent, String sendAddress, int sendPort) throws Exception{
         DatagramPacket datagramPacket;
-        datagramPacket = new DatagramPacket(bytesToSent, bytesToSent.length, droneAddress, dronePort);
+        InetAddress to = InetAddress.getByName(sendAddress);
+
+        datagramPacket = new DatagramPacket(bytesToSent, bytesToSent.length, to, sendPort);
         udpClient.send(datagramPacket);
-        System.out.println("Sent bytes to " + droneAddress.toString() + ":" + dronePort);
+        System.out.println("Sent bytes to " + to.toString() + ":" + sendPort);
     }
 
-    public DatagramPacket receiveMsg(byte[] bytesReceived) throws Exception{
+    public byte[] receiveMsg() throws Exception{
         DatagramPacket datagramPacket;
+        byte[] bytesReceived;
+        bytesReceived = new byte[64];
 
         datagramPacket = new DatagramPacket(bytesReceived, 64);
         try {
@@ -30,6 +34,10 @@ public class TelloComm {
         catch (SocketTimeoutException ex) {
             datagramPacket = null;
         }
-        return datagramPacket;
+        if (datagramPacket != null) {
+            return bytesReceived;
+        }
+        return null;
     }
+
 }
