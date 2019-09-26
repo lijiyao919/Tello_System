@@ -19,6 +19,7 @@ public class CurrentStateDisplay implements StateObserver, DisplayElement {
 
     @Override
     public void display() {
+        text1.setText("");
         String info = String.format("pitch:%s;roll:%s;yaw:%s;"+ "vgx:%s;vgy:%s;vgz:%s;"+ "templ:%s;temph:%s;"+  "tof:%s;h:%s;"+
                                     "bat:%s;baro:%s;"+ "time:%s;"+ "agx:%s;agy:%s;agz:%s",
                 StringUtils.formatInteger(sta.getPitch()), StringUtils.formatInteger(sta.getRoll()), StringUtils.formatInteger(sta.getYaw()),
