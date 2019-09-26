@@ -8,8 +8,8 @@ public class TelloCommTest {
     @Test
     public void testSendAndReceiveMsg() throws Exception {
     //public static void main(String args[]) throws Exception{
-        TelloComm dc1 = new TelloComm(InetAddress.getByName("127.0.0.1"), 0);
-        TelloComm dc2 = new TelloComm(InetAddress.getByName("127.0.0.1"), 8890);
+        TelloComm dc1 = new TelloComm(0);
+        TelloComm dc2 = new TelloComm(8890);
         byte[] cmdSend = new byte[64];
         byte[] cmdRec;
 

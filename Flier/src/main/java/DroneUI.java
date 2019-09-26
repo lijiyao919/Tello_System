@@ -26,7 +26,7 @@ public class DroneUI {
             MissionChoice[i]=input.nextInt();
         }
 
-        TelloComm tc = new TelloComm(InetAddress.getByName(DroneAddress), DronePort);
+        TelloComm tc = new TelloComm(DronePort);
         for(int i=0; i<numberOfMission; i++){
             missionArray[MissionChoice[i]-1].executeMission(tc);
         }

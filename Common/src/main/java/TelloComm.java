@@ -3,13 +3,9 @@ import java.nio.charset.StandardCharsets;
 
 public class TelloComm {
     private DatagramSocket udpClient;
-    private InetAddress droneAddress;
-    private int dronePort;
 
-    public TelloComm(InetAddress address, int port) throws Exception{
+    public TelloComm(int port) throws Exception{
         udpClient =  new DatagramSocket(port);
-        droneAddress = address;
-        dronePort = port;
         udpClient.setSoTimeout(1000);
     }
 
