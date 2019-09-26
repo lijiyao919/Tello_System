@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 import java.util.Date;
 
-public class DroneState {
+public class DroneState implements StateSubject{
     private boolean inCommandMode;
     private boolean hasTakenOff;
     private boolean videoStreamOn;
@@ -26,9 +27,11 @@ public class DroneState {
     private Double accelerationY;
     private Double accelerationZ;
     private int orientation;
+    private ArrayList observers;
 
     public DroneState() {
         resetState();
+        observers = new ArrayList();
     }
 
     public boolean isInCommandMode() { return inCommandMode; }
@@ -95,6 +98,7 @@ public class DroneState {
         accelerationZ = status.getAccelerationZ();
 
         stateTimestamp = new Date();
+        notifyObserver(status);
     }
 
     public Date getStateTimestamp() {
@@ -227,5 +231,27 @@ public class DroneState {
         accelerationY = 0.0;
         accelerationZ = 0.0;
         orientation = 0;
+    }
+
+    @Override
+    public void registerObserver(StateObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(StateObserver o) {
+        int i = observers.indexOf(o);
+        if (i>=0){
+            observers.remove(o);
+        }
+    }
+
+    @Override
+    public void notifyObserver(Status sta) {
+        for(int i=0; i<observers.size(); i++){
+            StateObserver observer = (StateObserver) observers.get(i);
+            observer.update(sta);
+        }
+
     }
 }
