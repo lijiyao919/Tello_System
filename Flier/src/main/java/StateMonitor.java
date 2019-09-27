@@ -9,7 +9,7 @@ public class StateMonitor implements Runnable{
         this.ds = ds;
         stateMsg = null;
         currStaShow = new CurrentStateDisplay(ds);
-        ds.setInCommandMode(true);
+        //ds.setInCommandMode(true);
     }
 
     private void receiveStateMsg() throws Exception{
