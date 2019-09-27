@@ -3,10 +3,14 @@ import java.nio.charset.StandardCharsets;
 
 public class TelloComm {
     private DatagramSocket udpClient;
+    private InetAddress srcAddr;
+    private int srcPort;
 
     public TelloComm(int port) throws Exception{
         udpClient =  new DatagramSocket(port);
         udpClient.setSoTimeout(1000);
+        srcAddr = null;
+        srcPort = -1;
     }
 
     public void sendMsg(byte[] bytesToSent, String sendAddress, int sendPort) throws Exception{
@@ -31,9 +35,20 @@ public class TelloComm {
             datagramPacket = null;
         }
         if (datagramPacket != null) {
+            srcAddr = datagramPacket.getAddress();
+            srcPort = datagramPacket.getPort();
             return bytesReceived;
         }
         return null;
     }
+
+    public InetAddress getSrcAddress() {
+        return srcAddr;
+    }
+
+    public int getSrcPort(){
+        return srcPort;
+    }
+
 
 }
