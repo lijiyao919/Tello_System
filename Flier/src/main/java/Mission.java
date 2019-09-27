@@ -45,7 +45,7 @@ public abstract class Mission {
         Boolean result = Boolean.FALSE;
         Message msg;
 
-        System.out.println("Put drone in command mode...");
+        System.out.println("Take off...");
         msg = new TakeOff();
         result=executeBasicMission(tc, msg);
         Thread.sleep(5000);
@@ -56,7 +56,7 @@ public abstract class Mission {
         Boolean result = Boolean.FALSE;
         Message msg;
 
-        System.out.println("Put drone in command mode...");
+        System.out.println("Land...");
         msg = new Land();
         result=executeBasicMission(tc, msg);
         Thread.sleep(5000);
