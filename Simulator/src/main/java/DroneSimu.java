@@ -5,12 +5,12 @@ public class DroneSimu {
 
     public static void main(String args[]) throws Exception {
         DroneState ds = new DroneState();
-        CmdHandler ch = new CmdHandler();
 
-        /*Runnable sp = new StatusPoster(ds);
+        Runnable sp = new StatusPoster(ds);
         Thread cmdThread = new Thread(sp);
-        cmdThread.start();*/
+        cmdThread.start();
 
+        CmdHandler ch = new CmdHandler(ds);
         while(true){
             ch.handleCmdMsg();
         }

@@ -4,7 +4,7 @@ public class Flier {
     public static void main(String args[]) throws Exception{
         DroneState ds = new DroneState();
         Runnable sm = new StateMonitor(ds);
-        DroneControl dc = new DroneControl();
+        DroneControl dc = new DroneControl(ds);
 
         int numberOfMission;
         Scanner input = new Scanner(System.in);

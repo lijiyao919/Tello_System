@@ -65,14 +65,16 @@ public abstract class Mission {
 
     protected abstract Boolean doCustomizedMissions(TelloComm tc) throws Exception;
 
-    public Boolean executeMission(TelloComm tc) throws Exception{
+    public Boolean executeMission(TelloComm tc, DroneState ds) throws Exception{
         if(enterCommandMode(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
+        ds.setInCommandMode(true);
 
         if(doTakeOff(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
+        ds.setHasTakenOff(true);
 
         if(doCustomizedMissions(tc) == Boolean.FALSE){
             return Boolean.FALSE;
@@ -81,6 +83,7 @@ public abstract class Mission {
         if(doLand(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
+        ds.setHasTakenOff(false);
 
         return Boolean.TRUE;
     }
