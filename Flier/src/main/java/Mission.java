@@ -13,9 +13,9 @@ public abstract class Mission {
             tc.sendMsg(bytesToSent, "127.0.0.1", 8889);
             bytesReceived = tc.receiveMsg();
             if (bytesReceived != null) {
-                System.out.println(String.format("Received %d bytes", bytesReceived.length));
+                //System.out.println(String.format("Received %d bytes", bytesReceived.length));
                 reply = Status.decode(bytesReceived, 0, 1000);
-                System.out.println("Receive " + reply.getMessageText());
+                //System.out.println("Receive " + reply.getMessageText());
                 if (reply.getMessageText().equals("ok")) {
                     return Boolean.TRUE;
                 }
@@ -41,15 +41,22 @@ public abstract class Mission {
         return result;
     }
 
-    protected Boolean doTakeOff(TelloComm tc) throws Exception {
+    protected Boolean doTakeOff(TelloComm tc, DroneState ds) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
-        System.out.println("Take off...");
-        msg = new TakeOff();
-        result=executeBasicMission(tc, msg);
-        Thread.sleep(5000);
-        return result;
+        if(ds.getBatteryPercentage() >= 60){
+            System.out.println("Take off...");
+            msg = new TakeOff();
+            result=executeBasicMission(tc, msg);
+            Thread.sleep(5000);
+            return result;
+        }
+        else{
+            System.out.println("Takeoff: The volumne of the battery is not enough...");
+            return Boolean.TRUE;
+        }
+
     }
 
     protected Boolean doLand(TelloComm tc) throws Exception {
@@ -63,7 +70,7 @@ public abstract class Mission {
         return result;
     }
 
-    protected abstract Boolean doCustomizedMissions(TelloComm tc) throws Exception;
+    protected abstract Boolean doCustomizedMissions(TelloComm tc, DroneState ds) throws Exception;
 
     public Boolean executeMission(TelloComm tc, DroneState ds) throws Exception{
         if(enterCommandMode(tc) == Boolean.FALSE){
@@ -71,12 +78,12 @@ public abstract class Mission {
         }
         ds.setInCommandMode(true);
 
-        if(doTakeOff(tc) == Boolean.FALSE){
+        if(doTakeOff(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
         ds.setHasTakenOff(true);
 
-        if(doCustomizedMissions(tc) == Boolean.FALSE){
+        if(doCustomizedMissions(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 

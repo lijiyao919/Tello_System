@@ -18,7 +18,8 @@ public class CmdHandlerTest {
 
     private Message testHandleCmdMsg(String cmd) throws Exception {
         //public static void main(String args[]) throws Exception{
-        CmdHandler ch = new CmdHandler();
+        DroneState ds=new DroneState();
+        CmdHandler ch = new CmdHandler(ds);
         TelloComm tcFlier = new TelloComm(0);
         Message request = new Left(cmd);
         byte[] cmdMsg = request.encode();

@@ -75,6 +75,12 @@ public class DroneState implements StateSubject{
         }
     }
 
+    public void consumeBattery(Integer amount){
+        batteryPercentage = batteryPercentage -amount;
+        if(batteryPercentage<0)
+            batteryPercentage = 0;
+    }
+
     public void updateFlyingInfo(Status status) {
         if (!inCommandMode || status==null) {
             return;
@@ -224,7 +230,7 @@ public class DroneState implements StateSubject{
         highTemperature = 0;
         flightDistance = 0;
         height = 0;
-        batteryPercentage = 0;
+        batteryPercentage = 100;
         barometerMeasurement = 0.0;
         motorTime = 0;
         accelerationX = 0.0;

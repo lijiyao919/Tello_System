@@ -26,7 +26,7 @@ public class TelloComm {
 
         datagramPacket = new DatagramPacket(bytesToSent, bytesToSent.length, to, sendPort);
         udpClient.send(datagramPacket);
-        System.out.println("Sent bytes to " + to.toString() + ":" + sendPort);
+        //System.out.println("Sent bytes to " + to.toString() + ":" + sendPort);
     }
 
     public byte[] receiveMsg() throws Exception{

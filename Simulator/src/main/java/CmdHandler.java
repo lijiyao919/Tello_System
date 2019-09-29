@@ -31,11 +31,10 @@ public class CmdHandler {
             ds.setInCommandMode(true);
             System.out.println(ds.isInCommandMode());
         }
-        Status sta = new Status(ds.getPitch(), ds.getRoll(), ds.getYaw(), ds.getSpeedX(), ds.getSpeedY(), ds.getSpeedZ(),
-                ds.getLowTemperature(), ds.getHighTemperature(), ds.getFlightDistance(), ds.getHeight(),
-                ds.getBatteryPercentage(), ds.getBarometerMeasurement(), ds.getMotorTime(),
-                ds.getAccelerationX(), ds.getAccelerationY(), ds.getAccelerationZ());
-        ds.updateFlyingInfo(sta);
+        else{
+            ds.consumeBattery(5);
+        }
+
     }
 
 
