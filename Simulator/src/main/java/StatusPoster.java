@@ -1,8 +1,10 @@
 public class StatusPoster implements Runnable{
     DroneState ds;
+    TelloComm tc;
 
-    public StatusPoster(DroneState ds){
+    public StatusPoster(DroneState ds) throws Exception{
         this.ds = ds;
+        tc = new TelloComm( );
     }
 
     public void sendStatusMsg() throws Exception {
@@ -11,7 +13,6 @@ public class StatusPoster implements Runnable{
                 ds.getBatteryPercentage(), ds.getBarometerMeasurement(), ds.getMotorTime(),
                 ds.getAccelerationX(), ds.getAccelerationY(), ds.getAccelerationZ());
         byte[] msg = sta.encode();
-        TelloComm tc = new TelloComm( 0);
         tc.sendMsg(msg, "127.0.0.1", 8890);
     }
 

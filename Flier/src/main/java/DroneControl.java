@@ -8,7 +8,7 @@ public class DroneControl {
     Mission[] missionArray;
 
     public DroneControl(DroneState ds) throws Exception{
-        tc = new TelloComm(0);
+        tc = new TelloComm();
         this.ds = ds;
         missionArray = new Mission[] {new Mission1(), new Mission2(), new Mission3()};
     }
