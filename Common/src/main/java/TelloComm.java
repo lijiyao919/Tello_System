@@ -13,6 +13,13 @@ public class TelloComm {
         srcPort = -1;
     }
 
+    public TelloComm() throws Exception{
+        udpClient =  new DatagramSocket();
+        udpClient.setSoTimeout(1000);
+        srcAddr = null;
+        srcPort = -1;
+    }
+
     public void sendMsg(byte[] bytesToSent, String sendAddress, int sendPort) throws Exception{
         DatagramPacket datagramPacket;
         InetAddress to = InetAddress.getByName(sendAddress);
@@ -25,9 +32,9 @@ public class TelloComm {
     public byte[] receiveMsg() throws Exception{
         DatagramPacket datagramPacket;
         byte[] bytesReceived;
-        bytesReceived = new byte[64];
+        bytesReceived = new byte[1024];
 
-        datagramPacket = new DatagramPacket(bytesReceived, 64);
+        datagramPacket = new DatagramPacket(bytesReceived, 1024);
         try {
             udpClient.receive(datagramPacket);
         }
