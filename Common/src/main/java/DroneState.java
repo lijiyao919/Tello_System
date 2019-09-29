@@ -217,9 +217,9 @@ public class DroneState implements StateSubject{
 
     private void resetFlyingInfo() {
         currentFlightTime = 0.0;
-        positionX = 0.0;
-        positionY = 0.0;
-        positionZ = 0.0;
+        positionX = 100.0;
+        positionY = 150.0;
+        positionZ = 100.0;
         pitch = 0;
         roll = 0;
         yaw = 0;

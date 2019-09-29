@@ -31,13 +31,17 @@ public abstract class Mission {
         return Boolean.FALSE;
     }
 
-    protected Boolean enterCommandMode(TelloComm tc) throws Exception {
+    protected Boolean enterCommandMode(TelloComm tc, DroneState ds) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
-        System.out.println("Put drone in command mode...");
+        System.out.println("Command mode...");
         msg = new Command();
         result=executeBasicMission(tc, msg);
+        if(result==Boolean.TRUE){
+            ds.setInCommandMode(true);
+        }
+        Thread.sleep(5000);
         return result;
     }
 
@@ -49,6 +53,10 @@ public abstract class Mission {
             System.out.println("Take off...");
             msg = new TakeOff();
             result=executeBasicMission(tc, msg);
+            if(result==Boolean.TRUE){
+                ds.setHasTakenOff(true);
+                ds.move(0, -75, 0);
+            }
             Thread.sleep(5000);
             return result;
         }
@@ -59,13 +67,17 @@ public abstract class Mission {
 
     }
 
-    protected Boolean doLand(TelloComm tc) throws Exception {
+    protected Boolean doLand(TelloComm tc, DroneState ds) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
         System.out.println("Land...");
         msg = new Land();
         result=executeBasicMission(tc, msg);
+        if(result==Boolean.TRUE){
+            ds.setHasTakenOff(false);
+            ds.move(0, 75, 0);
+        }
         Thread.sleep(5000);
         return result;
     }
@@ -73,24 +85,22 @@ public abstract class Mission {
     protected abstract Boolean doCustomizedMissions(TelloComm tc, DroneState ds) throws Exception;
 
     public Boolean executeMission(TelloComm tc, DroneState ds) throws Exception{
-        if(enterCommandMode(tc) == Boolean.FALSE){
+        if(enterCommandMode(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
-        ds.setInCommandMode(true);
 
         if(doTakeOff(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
-        ds.setHasTakenOff(true);
 
         if(doCustomizedMissions(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 
-        if(doLand(tc) == Boolean.FALSE){
+        if(doLand(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
-        ds.setHasTakenOff(false);
+
 
         return Boolean.TRUE;
     }

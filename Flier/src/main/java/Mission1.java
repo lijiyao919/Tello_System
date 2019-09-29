@@ -12,10 +12,12 @@ public class Mission1 extends Mission {
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
+            ds.move(-50, 0,0);
             Thread.sleep(5000);
         }
         else{
             System.out.println("Left 200: The volumne of the battery is not enough...");
+            Thread.sleep(1000);
             result = Boolean.TRUE;
         }
 
@@ -28,10 +30,12 @@ public class Mission1 extends Mission {
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
+            ds.move(50, 0,0);
             Thread.sleep(5000);
         }
         else{
             System.out.println("Right 200: The volumne of the battery is not enough...");
+            Thread.sleep(1000);
             result = Boolean.TRUE;
         }
 
