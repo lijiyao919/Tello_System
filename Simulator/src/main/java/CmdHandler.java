@@ -29,7 +29,6 @@ public class CmdHandler {
     private void updateDroneState(Message cmdMsg) throws Exception {
         if(cmdMsg.getMessageText().startsWith(Command.getKeyWord())){
             ds.setInCommandMode(true);
-            System.out.println(ds.isInCommandMode());
         }
         else{
             ds.consumeBattery(5);

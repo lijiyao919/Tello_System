@@ -26,7 +26,7 @@ public class RotateTest{
         Message decodeMsg;
 
         encodeMsg = cmd.encode();
-        decodeMsg = cmd.decode(encodeMsg, 0, 1000);
+        decodeMsg = Message.decode(encodeMsg, 0, 1000);
 
         Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
 
