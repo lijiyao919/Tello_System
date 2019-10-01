@@ -3,9 +3,9 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class DroneControl {
-    TelloComm tc;
-    DroneState ds;
-    Mission[] missionArray;
+    private TelloComm tc;
+    private DroneState ds;
+    private Mission[] missionArray;
 
     public DroneControl(DroneState ds) throws Exception{
         tc = new TelloComm();

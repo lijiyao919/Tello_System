@@ -1,6 +1,6 @@
 public class Mission2 extends Mission {
     @Override
-    public Boolean doCustomizedMissions(TelloComm tc, DroneState ds) throws Exception {
+    protected Boolean doCustomizedMissions(TelloComm tc, DroneState ds) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 

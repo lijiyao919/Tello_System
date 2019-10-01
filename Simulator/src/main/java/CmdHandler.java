@@ -1,6 +1,6 @@
 public class CmdHandler {
-    TelloComm tc;
-    DroneState ds;
+    private TelloComm tc;
+    private DroneState ds;
 
     public CmdHandler(DroneState ds) throws Exception{
         tc = new TelloComm(8889);

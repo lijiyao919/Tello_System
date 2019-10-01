@@ -1,8 +1,8 @@
 public class StateMonitor implements Runnable{
-    TelloComm tc;
-    DroneState ds;
-    Message stateMsg;
-    CurrentStateDisplay currStaShow;
+    private TelloComm tc;
+    private DroneState ds;
+    private Message stateMsg;
+    private CurrentStateDisplay currStaShow;
 
     public StateMonitor(DroneState ds) throws Exception {
         tc = new TelloComm( 8890);

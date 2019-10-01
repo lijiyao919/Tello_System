@@ -1,6 +1,6 @@
 public class StatusPoster implements Runnable{
-    DroneState ds;
-    TelloComm tc;
+    private DroneState ds;
+    private TelloComm tc;
 
     public StatusPoster(DroneState ds) throws Exception{
         this.ds = ds;
