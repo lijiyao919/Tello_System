@@ -32,7 +32,7 @@ public class StateMonitor implements Runnable{
         while (true){
             try {
                 updateDroneState();
-                Thread.sleep(100);
+               // Thread.sleep(100);
             } catch (Exception e) {
                 //log
             }
