@@ -13,10 +13,10 @@ public class DroneStateTest {
         Assert.assertEquals(Boolean.FALSE, ds.isVideoStreamOn());
         Assert.assertEquals(Boolean.FALSE, ds.hasTakenOff());
         Assert.assertEquals(dt, ds.getStateTimestamp());
-        //Assert.assertEquals(0.0, ds.getCurrentFlightTime().doubleValue(), 0.1);
-        //Assert.assertEquals(0.0, ds.getPositionX().doubleValue());
-        //Assert.assertEquals(0.0, ds.getPositionY().doubleValue());
-        //Assert.assertEquals(0.0, ds.getPositionZ().doubleValue());
+        Assert.assertEquals(0.0, ds.getCurrentFlightTime().doubleValue(), 0.01);
+        Assert.assertEquals(100.0, ds.getPositionX().doubleValue(), 0.01);
+        Assert.assertEquals(150.0, ds.getPositionY().doubleValue(), 0.01);
+        Assert.assertEquals(100.0, ds.getPositionZ().doubleValue(),0.01);
         Assert.assertEquals(0, ds.getPitch().intValue());
         Assert.assertEquals(0, ds.getRoll().intValue());
         Assert.assertEquals(0, ds.getYaw().intValue());
@@ -27,12 +27,12 @@ public class DroneStateTest {
         Assert.assertEquals(0, ds.getHighTemperature().intValue());
         Assert.assertEquals(0, ds.getFlightDistance().intValue());
         Assert.assertEquals(0, ds.getHeight().intValue());
-        Assert.assertEquals(0, ds.getBatteryPercentage().intValue());
-        //Assert.assertEquals(0.0, ds.getBarometerMeasurement().doubleValue());
+        Assert.assertEquals(100, ds.getBatteryPercentage().intValue());
+        Assert.assertEquals(0.0, ds.getBarometerMeasurement().doubleValue(), 0.01);
         Assert.assertEquals(0, ds.getMotorTime().intValue());
-        //Assert.assertEquals(0.0, ds.getAccelerationX().doubleValue());
-        //Assert.assertEquals(0.0, ds.getAccelerationY().doubleValue());
-        //Assert.assertEquals(0.0, ds.getAccelerationZ().doubleValue());
+        Assert.assertEquals(0.0, ds.getAccelerationX().doubleValue(), 0.01);
+        Assert.assertEquals(0.0, ds.getAccelerationY().doubleValue(),0.01);
+        Assert.assertEquals(0.0, ds.getAccelerationZ().doubleValue(),0.01);
         Assert.assertEquals(0, ds.getOrientation());
     }
 
@@ -55,7 +55,7 @@ public class DroneStateTest {
     }
 
     @Test
-    public void testSetHasTakenOffTrue(){
+    public void testSetHasTakenOffSuccess(){
         DroneState ds = new DroneState();
         ds.setInCommandMode(Boolean.TRUE);
         ds.setHasTakenOff(Boolean.TRUE);
@@ -63,12 +63,20 @@ public class DroneStateTest {
     }
 
     @Test
-    public void testSetHasTakenOffFalse(){
+    public void testSetHasTakenOffNotInCmdMode(){
         DroneState ds = new DroneState();
         ds.setInCommandMode(Boolean.FALSE);
+        ds.setHasTakenOff(Boolean.TRUE);
+        Assert.assertEquals(Boolean.FALSE, ds.hasTakenOff());
+    }
+
+    @Test
+    public void testSetHasTakenOffDefault(){
+        DroneState ds = new DroneState();
         ds.setHasTakenOff(Boolean.FALSE);
         Assert.assertEquals(Boolean.FALSE, ds.hasTakenOff());
     }
+
 
     @Test
     public void testConsumeBatteryNormal(){
@@ -82,6 +90,45 @@ public class DroneStateTest {
         DroneState ds = new DroneState();
         ds.consumeBattery(150);
         Assert.assertEquals(0, ds.getBatteryPercentage().intValue());
+    }
+
+    @Test
+    public void testUpdateFlyingInfoSuccess(){
+        DroneState ds = new DroneState();
+        ds.setInCommandMode(true);
+        String stat = "mid:-1;x:0;y:0;z:0;mpry:0,0,0;pitch:10;roll:60;yaw:30;"+
+                "vgx:20;vgy:20;vgz:20;"+
+                "templ:70;temph:100;"+
+                "tof:100;h:50;"+
+                "bat:70;baro:30.00;"+
+                "time:50;"+
+                "agx:10.00;agy:10.00;agz:10.10";
+        Status status= new Status(stat);
+        ds.updateFlyingInfo(status);
+
+        Assert.assertEquals(10, ds.getPitch().intValue());
+        Assert.assertEquals(60, ds.getRoll().intValue());
+        Assert.assertEquals(30, ds.getYaw().intValue());
+        Assert.assertEquals(20, ds.getSpeedX().intValue());
+        Assert.assertEquals(20, ds.getSpeedY().intValue());
+        Assert.assertEquals(20, ds.getSpeedZ().intValue());
+        Assert.assertEquals(70, ds.getLowTemperature().intValue());
+        Assert.assertEquals(100, ds.getHighTemperature().intValue());
+        Assert.assertEquals(100, ds.getFlightDistance().intValue());
+        Assert.assertEquals(50, ds.getHeight().intValue());
+        Assert.assertEquals(70, ds.getBatteryPercentage().intValue());
+        //Assert.assertEquals(0.0, ds.getBarometerMeasurement().doubleValue());
+        Assert.assertEquals(50, ds.getMotorTime().intValue());
+        //Assert.assertEquals(0.0, ds.getAccelerationX().doubleValue());
+        //Assert.assertEquals(0.0, ds.getAccelerationY().doubleValue());
+        //Assert.assertEquals(0.0, ds.getAccelerationZ().doubleValue());
+    }
+
+    @Test
+    public void testUpdateFlyingInfoFailure() {
+        DroneState ds = new DroneState();
+        Status status = null;
+        ds.updateFlyingInfo(status);
     }
 
     @Test
@@ -103,6 +150,7 @@ public class DroneStateTest {
     @Test
     public void testMove(){
         DroneState ds = new DroneState();
+        ds.setInCommandMode(Boolean.TRUE);
         ds.setHasTakenOff(Boolean.TRUE);
         ds.move(1.0,1.0,1.0);
         //Assert.assertEquals(1.0, ds.getPositionX().doubleValue());
@@ -126,6 +174,15 @@ public class DroneStateTest {
 
         ds.registerObserver(obs);
         ds.removeObserver(obs);
+    }
+
+    @Test
+    public void testNotifyObserver(){
+        DroneState ds = new DroneState();
+        StateObserver obs = new MockObserver();
+        Status status=null;
+        ds.registerObserver(obs);
+        ds.notifyObserver(status);
     }
 
 

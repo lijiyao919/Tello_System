@@ -2,8 +2,8 @@ public class CmdHandler {
     private TelloComm tc;
     private DroneState ds;
 
-    public CmdHandler(DroneState ds) throws Exception{
-        tc = new TelloComm(8889);
+    public CmdHandler(DroneState ds, TelloComm tc) throws Exception{
+        this.tc = tc;
         this.ds = ds;
     }
 
@@ -15,9 +15,9 @@ public class CmdHandler {
         if(msg != null) {
             Message cmdMsg = Message.decode(msg, 0, 1000);
             System.out.println(cmdMsg.getMessageText());
-            updateDroneState(cmdMsg);
             if (tc.getSrcAddress() != null && tc.getSrcPort() >= 0) {
                 if (cmdMsg.isValid()) {
+                    updateDroneState(cmdMsg);
                     reply = new Reply("ok");
                 }
                 byte[] replyMsg = reply.encode();

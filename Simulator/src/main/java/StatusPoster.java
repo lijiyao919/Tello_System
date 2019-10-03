@@ -2,9 +2,9 @@ public class StatusPoster implements Runnable{
     private DroneState ds;
     private TelloComm tc;
 
-    public StatusPoster(DroneState ds) throws Exception{
+    public StatusPoster(DroneState ds, TelloComm tc) throws Exception{
         this.ds = ds;
-        tc = new TelloComm( );
+        this.tc = tc;
     }
 
     public void sendStatusMsg() throws Exception {
