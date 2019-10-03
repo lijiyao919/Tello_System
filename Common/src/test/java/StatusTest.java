@@ -35,6 +35,33 @@ public class StatusTest {
     }
 
     @Test
+    public void testConstructorWithNull(){
+        Status sta = new Status(null);
+    }
+
+    @Test
+    public void testConstructorWithInvalidString(){
+        Status sta = new Status("abc");
+
+    }
+
+    @Test
+    public void testConstructorWithFieldValueNull(){
+        String msg = "mid:-1;x:0;y:0;z:0;mpry:0,0,0;pitch:;;ya:30;"+
+                "vgx:20;vgy:20;vgz:20;"+
+                "templ:70;temph:100;"+
+                "tof:100;h:50;"+
+                "bat:70;baro:;"+
+                "time:50;"+
+                "agx:10;agy:10;agz:null";
+        Status sta = new Status(msg);
+        Assert.assertEquals(null, sta.getPitch());
+        Assert.assertEquals(null, sta.getBarometerMeasurement());
+        Assert.assertEquals(null, sta.getRoll());
+        Assert.assertEquals(null, sta.getYaw());
+    }
+
+    @Test
     public void testGetKeyWord(){
         String msg = "mid:-1;x:0;y:0;z:0;mpry:0,0,0;pitch:10;roll:60;yaw:30;"+
                      "vgx:20;vgy:20;vgz:20;"+
@@ -69,9 +96,9 @@ public class StatusTest {
                 "vgx:20;vgy:20;vgz:20;"+
                 "templ:70;temph:100;"+
                 "tof:100;h:50;"+
-                "bat:70;baro:30.0;"+
+                "bat:70;baro:30.00;"+
                 "time:50;"+
-                "agx:10.0;agy:10.0;agz:10.0";
+                "agx:10.00;agy:10.00;agz:10.00";
         Assert.assertEquals(expectedResult, sta.getMessageText());
     }
 

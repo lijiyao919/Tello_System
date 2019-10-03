@@ -1,7 +1,7 @@
 public class CommandMessageFactory implements MessageFactory{
     @Override
     public Message createMsg(String data) {
-        Message msg;
+        Message msg=null;
         if (data.startsWith(Command.getKeyWord()))
             msg = new Command();
         else if (data.startsWith(TakeOff.getKeyWord()))
@@ -14,8 +14,7 @@ public class CommandMessageFactory implements MessageFactory{
             msg = new Right(data);
         else if (data.startsWith(Rotate.getKeyWord()))
             msg = new Rotate(data);
-        else
-            msg=null;
+
         return msg;
     }
 }

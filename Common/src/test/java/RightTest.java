@@ -9,13 +9,13 @@ public class RightTest{
 
     @Test
     public void testGetMessageTest(){
-        Message cmd = new Left("right 200");
+        Message cmd = new Right("right 200");
         Assert.assertEquals("right 200", cmd.getMessageText());
     }
 
     @Test
     public void testGetMessageType(){
-        Message cmd = new Left("right 200");
+        Message cmd = new Right("right 200");
         Assert.assertEquals("command", cmd.getMessageType());
     }
 
@@ -30,5 +30,11 @@ public class RightTest{
 
         Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
 
+    }
+
+    @Test
+    public void testConstructWithInvalidParameter(){
+        Message cmd = new Right("right 700");
+        Assert.assertEquals(Boolean.FALSE, cmd.isValid());
     }
 }

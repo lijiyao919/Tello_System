@@ -8,7 +8,7 @@ public class LeftTest{
     }
 
     @Test
-    public void testGetMessageTest(){
+    public void testGetMessageText(){
         Message cmd = new Left("left 200");
         Assert.assertEquals("left 200", cmd.getMessageText());
     }
@@ -31,5 +31,12 @@ public class LeftTest{
         Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
 
     }
+
+    @Test
+    public void testConstructWithInvalidParameter(){
+        Message cmd = new Left("left 700");
+        Assert.assertEquals(Boolean.FALSE, cmd.isValid());
+    }
+
 }
 

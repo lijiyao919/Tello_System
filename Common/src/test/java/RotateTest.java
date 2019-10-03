@@ -31,4 +31,10 @@ public class RotateTest{
         Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
 
     }
+
+    @Test
+    public void testConstructWithInvalidParameter(){
+        Message cmd = new Rotate("cw 600");
+        Assert.assertEquals(Boolean.FALSE, cmd.isValid());
+    }
 }
