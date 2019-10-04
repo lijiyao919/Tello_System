@@ -1,8 +1,9 @@
-import java.net.InetAddress;
+import Command.CmdHandler;
+import Communicator.TelloComm;
+import State.DroneState;
+import Status.StatusPoster;
 
 public class DroneSimu {
-
-
     public static void main(String args[]) throws Exception {
         DroneState ds = new DroneState();
         TelloComm tcCmdHandler = new TelloComm(8889);

@@ -1,3 +1,5 @@
+import Message.Message;
+import Message.Right;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,3 +1,7 @@
+import Mock.MockObserver;
+import State.DroneState;
+import State.StateObserver;
+import Message.Status;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Date;

@@ -1,8 +1,6 @@
+import Communicator.TelloComm;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.net.InetAddress;
-import java.util.Arrays;
 
 public class TelloCommTest {
     @Test

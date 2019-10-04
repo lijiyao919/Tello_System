@@ -1,16 +1,18 @@
+import Message.Message;
+import Message.Command;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class CommandTest{
     @Test
     public void testGetKeyWord(){
-        Assert.assertEquals("Command", Command.getKeyWord());
+        Assert.assertEquals("Message.Message.Command", Command.getKeyWord());
     }
 
     @Test
     public void testGetMessageTest(){
         Message cmd = new Command();
-        Assert.assertEquals("Command", cmd.getMessageText());
+        Assert.assertEquals("Message.Message.Command", cmd.getMessageText());
     }
 
     @Test

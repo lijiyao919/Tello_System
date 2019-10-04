@@ -1,3 +1,6 @@
+import Observer.CurrentStateDisplay;
+import State.DroneState;
+import Message.Status;
 import org.junit.Test;
 
 public class CurrentStateDisplayTest {

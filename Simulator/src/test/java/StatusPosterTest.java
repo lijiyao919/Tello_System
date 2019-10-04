@@ -1,4 +1,9 @@
-import org.junit.Assert;
+import Communicator.TelloComm;
+import Mock.MockTelloComm;
+import State.DroneState;
+import Message.Message;
+import Message.Command;
+import Status.StatusPoster;
 import org.junit.Test;
 
 public class StatusPosterTest {

@@ -1,7 +1,7 @@
+import Message.Message;
+import Message.Status;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class StatusTest {
     @Test
