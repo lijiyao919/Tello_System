@@ -8,11 +8,10 @@ public class Mission2 extends Mission {
         if(ds.getBatteryPercentage()>=80){
             System.out.println("Right 200...");
             msg = new Left("right 200");
-            result = executeBasicMission(tc, msg);
+            result = executeBasicMission(tc, ds, msg);
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
-            ds.move(50, 0,0);
             Thread.sleep(5000);
         }
         else{
@@ -26,11 +25,10 @@ public class Mission2 extends Mission {
         if(ds.getBatteryPercentage()>=80){
             System.out.println("Left 200...");
             msg = new Right("left 200");
-            result = executeBasicMission(tc, msg);
+            result = executeBasicMission(tc, ds, msg);
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
-            ds.move(-50, 0,0);
             Thread.sleep(5000);
         }
         else{

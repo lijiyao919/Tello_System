@@ -4,8 +4,8 @@ public class StateMonitor implements Runnable{
     private Message stateMsg;
     private CurrentStateDisplay currStaShow;
 
-    public StateMonitor(DroneState ds) throws Exception {
-        tc = new TelloComm( 8890);
+    public StateMonitor(DroneState ds, TelloComm tc) throws Exception {
+        this.tc = tc;
         this.ds = ds;
         stateMsg = null;
         currStaShow = new CurrentStateDisplay(ds);

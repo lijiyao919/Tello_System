@@ -3,8 +3,10 @@ import java.util.Scanner;
 public class Flier {
     public static void main(String args[]) throws Exception{
         DroneState ds = new DroneState();
-        Runnable sm = new StateMonitor(ds);
-        DroneControl dc = new DroneControl(ds);
+        TelloComm tcControl = new TelloComm();
+        TelloComm tcMonitor = new TelloComm( 8890);
+        Runnable sm = new StateMonitor(ds, tcMonitor);
+        DroneControl dc = new DroneControl(ds, tcControl);
 
         int numberOfMission;
         Scanner input = new Scanner(System.in);

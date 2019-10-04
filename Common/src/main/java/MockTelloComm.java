@@ -18,8 +18,14 @@ public class MockTelloComm extends TelloComm{
 
     @Override
     public byte[] receiveMsg() {
-        byte[] msgByte = msg.encode();
-        return msgByte;
+        if(msg != null) {
+            byte[] msgByte = msg.encode();
+            return msgByte;
+        }
+        else{
+            return null;
+        }
+
     }
 
     @Override
