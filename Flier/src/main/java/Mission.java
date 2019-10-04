@@ -1,8 +1,5 @@
-import java.net.DatagramPacket;
-import java.nio.charset.StandardCharsets;
-
 public abstract class Mission {
-    protected Boolean executeBasicMission(TelloComm tc, DroneState ds, Message msg) throws Exception{
+    protected Boolean executeBasicAction(TelloComm tc, DroneState ds, Message msg) throws Exception{
         byte[] bytesToSent;
         byte[] bytesReceived ;
         int maxRetries = 3;
@@ -59,7 +56,7 @@ public abstract class Mission {
 
         System.out.println("Command mode...");
         msg = new Command();
-        result=executeBasicMission(tc, ds, msg);
+        result= executeBasicAction(tc, ds, msg);
         Thread.sleep(5000);
         return result;
     }
@@ -71,7 +68,7 @@ public abstract class Mission {
         if(ds.getBatteryPercentage() >= 60){
             System.out.println("Take off...");
             msg = new TakeOff();
-            result=executeBasicMission(tc, ds, msg);
+            result= executeBasicAction(tc, ds, msg);
             Thread.sleep(5000);
             return result;
         }
@@ -88,12 +85,12 @@ public abstract class Mission {
 
         System.out.println("Land...");
         msg = new Land();
-        result=executeBasicMission(tc, ds, msg);
+        result= executeBasicAction(tc, ds, msg);
         Thread.sleep(5000);
         return result;
     }
 
-    protected abstract Boolean doCustomizedMissions(TelloComm tc, DroneState ds) throws Exception;
+    protected abstract Boolean doCustomizedActions(TelloComm tc, DroneState ds) throws Exception;
 
     public Boolean executeMission(TelloComm tc, DroneState ds) throws Exception{
         if(enterCommandMode(tc, ds) == Boolean.FALSE){
@@ -104,7 +101,7 @@ public abstract class Mission {
             return Boolean.FALSE;
         }
 
-        if(doCustomizedMissions(tc, ds) == Boolean.FALSE){
+        if(doCustomizedActions(tc, ds) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 

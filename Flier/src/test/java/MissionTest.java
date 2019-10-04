@@ -4,7 +4,7 @@ import org.junit.Test;
 public class MissionTest {
 
     @Test
-    public void testExecuteBasicMissionErrorReply() throws Exception{
+    public void testExecuteBasicActionErrorReply() throws Exception{
         Message reply = new Reply("error");
         Message cmd = new Command();
         TelloComm tc= new MockTelloComm(reply);
@@ -12,20 +12,20 @@ public class MissionTest {
         Mission m1 = new Mission1();
         Boolean res;
 
-        res = m1.executeBasicMission(tc,ds, cmd);
+        res = m1.executeBasicAction(tc,ds, cmd);
 
         Assert.assertEquals(Boolean.FALSE, res);
     }
 
     @Test
-    public void testExecuteBasicMissionNullMsg() throws Exception{
+    public void testExecuteBasicActionNullMsg() throws Exception{
         Message cmd = new Command();
         TelloComm tc= new MockTelloComm(null);
         DroneState ds = new DroneState();
         Mission m1 = new Mission1();
         Boolean res;
 
-        res = m1.executeBasicMission(tc,ds, cmd);
+        res = m1.executeBasicAction(tc,ds, cmd);
 
         Assert.assertEquals(Boolean.FALSE, res);
     }

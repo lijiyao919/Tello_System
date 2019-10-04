@@ -1,6 +1,6 @@
 public class Mission2 extends Mission {
     @Override
-    protected Boolean doCustomizedMissions(TelloComm tc, DroneState ds) throws Exception {
+    protected Boolean doCustomizedActions(TelloComm tc, DroneState ds) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
@@ -8,7 +8,7 @@ public class Mission2 extends Mission {
         if(ds.getBatteryPercentage()>=80){
             System.out.println("Right 200...");
             msg = new Left("right 200");
-            result = executeBasicMission(tc, ds, msg);
+            result = executeBasicAction(tc, ds, msg);
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
@@ -25,7 +25,7 @@ public class Mission2 extends Mission {
         if(ds.getBatteryPercentage()>=80){
             System.out.println("Left 200...");
             msg = new Right("left 200");
-            result = executeBasicMission(tc, ds, msg);
+            result = executeBasicAction(tc, ds, msg);
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
