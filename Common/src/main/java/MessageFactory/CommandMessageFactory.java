@@ -1,8 +1,16 @@
-package Message;
+package MessageFactory;
+
+import Message.Message;
+import Message.Right;
+import Message.Left;
+import Message.TakeOff;
+import Message.Command;
+import Message.Land;
+import Message.Rotate;
 
 public class CommandMessageFactory implements MessageFactory {
     @Override
-    public Message createMsg(String data) {
+    public Message createMsg(String data) throws UnsupportedOperationException {
         Message msg=null;
         if (data.startsWith(Command.getKeyWord()))
             msg = new Command();
@@ -16,6 +24,8 @@ public class CommandMessageFactory implements MessageFactory {
             msg = new Right(data);
         else if (data.startsWith(Rotate.getKeyWord()))
             msg = new Rotate(data);
+        else
+            throw new UnsupportedOperationException();
 
         return msg;
     }

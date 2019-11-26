@@ -1,5 +1,9 @@
 package Message;
 
+import MessageFactory.MessageFactory;
+import MessageFactory.StatusMessageFactory;
+import MessageFactory.CommandMessageFactory;
+import MessageFactory.ReplyMessageFactory;
 import java.nio.charset.StandardCharsets;
 
 public abstract class Message {

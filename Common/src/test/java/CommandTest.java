@@ -6,13 +6,13 @@ import org.junit.Test;
 public class CommandTest{
     @Test
     public void testGetKeyWord(){
-        Assert.assertEquals("Message.Message.Command", Command.getKeyWord());
+        Assert.assertEquals("command", Command.getKeyWord());
     }
 
     @Test
     public void testGetMessageTest(){
         Message cmd = new Command();
-        Assert.assertEquals("Message.Message.Command", cmd.getMessageText());
+        Assert.assertEquals("command", cmd.getMessageText());
     }
 
     @Test
