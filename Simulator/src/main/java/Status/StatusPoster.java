@@ -8,8 +8,8 @@ public class StatusPoster implements Runnable{
     private DroneState ds;
     private TelloComm tc;
 
-    public StatusPoster(DroneState ds, TelloComm tc) throws Exception{
-        this.ds = ds;
+    public StatusPoster(TelloComm tc) {
+        this.ds = DroneState.getInstance();
         this.tc = tc;
     }
 
@@ -24,7 +24,7 @@ public class StatusPoster implements Runnable{
 
     @Override
     public void run() {
-        while(Boolean.TRUE){
+        while(true){
             try {
                 sendStatusMsg();
                 Thread.sleep(100);

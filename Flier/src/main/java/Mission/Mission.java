@@ -6,7 +6,13 @@ import Message.*;
 import State.*;
 
 public abstract class Mission {
-    public Boolean executeBasicAction(TelloComm tc, DroneState ds, Message msg) throws Exception{
+    protected DroneState ds;
+
+    public Mission() {
+        ds = DroneState.getInstance();
+    }
+
+    public Boolean executeBasicAction(TelloComm tc, Message msg) throws Exception{
         byte[] bytesToSent;
         byte[] bytesReceived ;
         int maxRetries = 3;
@@ -21,7 +27,7 @@ public abstract class Mission {
                 reply = Status.decode(bytesReceived, 0, 1000);
                 //System.out.println("Receive " + reply.getMessageText());
                 if (reply.getMessageText().equals("ok")) {
-                    updateByCmdReply(ds, msg);
+                    updateByCmdReply(msg);
                     return Boolean.TRUE;
                 }
                 else{
@@ -36,7 +42,7 @@ public abstract class Mission {
         return Boolean.FALSE;
     }
 
-    private void updateByCmdReply(DroneState ds, Message msg){
+    private void updateByCmdReply(Message msg){
         if(msg.getMessageText().startsWith(Command.getKeyWord())){
             ds.setInCommandMode(true);
         }
@@ -57,25 +63,25 @@ public abstract class Mission {
 
     }
 
-    private Boolean enterCommandMode(TelloComm tc, DroneState ds) throws Exception {
+    private Boolean enterCommandMode(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
         System.out.println("Command mode...");
         msg = new Command();
-        result= executeBasicAction(tc, ds, msg);
+        result= executeBasicAction(tc, msg);
         Thread.sleep(5000);
         return result;
     }
 
-    private Boolean doTakeOff(TelloComm tc, DroneState ds) throws Exception {
+    private Boolean doTakeOff(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
         if(ds.getBatteryPercentage() >= 60){
             System.out.println("Take off...");
             msg = new TakeOff();
-            result= executeBasicAction(tc, ds, msg);
+            result= executeBasicAction(tc, msg);
             Thread.sleep(5000);
             return result;
         }
@@ -86,33 +92,33 @@ public abstract class Mission {
 
     }
 
-    private Boolean doLand(TelloComm tc, DroneState ds) throws Exception {
+    private Boolean doLand(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
         System.out.println("Land...");
         msg = new Land();
-        result= executeBasicAction(tc, ds, msg);
+        result= executeBasicAction(tc, msg);
         Thread.sleep(5000);
         return result;
     }
 
-    protected abstract Boolean doCustomizedActions(TelloComm tc, DroneState ds) throws Exception;
+    protected abstract Boolean doCustomizedActions(TelloComm tc) throws Exception;
 
-    public Boolean executeMission(TelloComm tc, DroneState ds) throws Exception{
-        if(enterCommandMode(tc, ds) == Boolean.FALSE){
+    public Boolean executeMission(TelloComm tc) throws Exception{
+        if(enterCommandMode(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 
-        if(doTakeOff(tc, ds) == Boolean.FALSE){
+        if(doTakeOff(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 
-        if(doCustomizedActions(tc, ds) == Boolean.FALSE){
+        if(doCustomizedActions(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 
-        if(doLand(tc, ds) == Boolean.FALSE){
+        if(doLand(tc) == Boolean.FALSE){
             return Boolean.FALSE;
         }
 

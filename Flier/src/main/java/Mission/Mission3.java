@@ -7,7 +7,7 @@ import Message.Rotate;
 
 public class Mission3 extends Mission {
     @Override
-    protected Boolean doCustomizedActions(TelloComm tc, DroneState ds) throws Exception {
+    protected Boolean doCustomizedActions(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
         Message msg;
 
@@ -15,7 +15,7 @@ public class Mission3 extends Mission {
         if(ds.getBatteryPercentage()>=65){
             System.out.println("cw 360...");
             msg = new Rotate("cw 360");
-            result = executeBasicAction(tc, ds, msg);
+            result = executeBasicAction(tc, msg);
             Thread.sleep(5000);
         }
         else{

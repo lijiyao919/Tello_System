@@ -1,17 +1,14 @@
 import Communicator.TelloComm;
 import Control.DroneControl;
 import Monitor.StateMonitor;
-import State.DroneState;
-
 import java.util.Scanner;
 
 public class Flier {
     public static void main(String args[]) throws Exception{
-        DroneState ds = new DroneState();
         TelloComm tcControl = new TelloComm();
         TelloComm tcMonitor = new TelloComm( 8890);
-        Runnable sm = new StateMonitor(ds, tcMonitor);
-        DroneControl dc = new DroneControl(ds, tcControl);
+        Runnable sm = new StateMonitor(tcMonitor);
+        DroneControl dc = new DroneControl(tcControl);
 
         int numberOfMission;
         Scanner input = new Scanner(System.in);

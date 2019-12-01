@@ -10,9 +10,9 @@ public class CmdHandler {
     private TelloComm tc;
     private DroneState ds;
 
-    public CmdHandler(DroneState ds, TelloComm tc) throws Exception{
+    public CmdHandler(TelloComm tc) {
         this.tc = tc;
-        this.ds = ds;
+        this.ds = DroneState.getInstance();
     }
 
     public void handleCmdMsg() throws Exception {
@@ -34,7 +34,7 @@ public class CmdHandler {
         }
     }
 
-    private void updateDroneState(Message cmdMsg) throws Exception {
+    private void updateDroneState(Message cmdMsg) {
         if(cmdMsg.getMessageText().startsWith(Command.getKeyWord())){
             ds.setInCommandMode(true);
         }

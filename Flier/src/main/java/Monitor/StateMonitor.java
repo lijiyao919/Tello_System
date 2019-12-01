@@ -12,11 +12,11 @@ public class StateMonitor implements Runnable{
     private Message stateMsg;
     private CurrentStateDisplay currStaShow;
 
-    public StateMonitor(DroneState ds, TelloComm tc) throws Exception {
+    public StateMonitor(TelloComm tc) {
         this.tc = tc;
-        this.ds = ds;
+        this.ds = DroneState.getInstance();
         stateMsg = null;
-        currStaShow = new CurrentStateDisplay(ds);
+        currStaShow = new CurrentStateDisplay();
         //ds.setInCommandMode(true);
     }
 

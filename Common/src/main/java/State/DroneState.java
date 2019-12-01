@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DroneState implements StateSubject {
+    private static DroneState uniqueStateInstance;
     private boolean inCommandMode;
     private boolean hasTakenOff;
     private boolean videoStreamOn;
@@ -33,9 +34,17 @@ public class DroneState implements StateSubject {
     private int orientation;
     private ArrayList observers;
 
-    public DroneState() {
+    private DroneState() {
         resetState();
         observers = new ArrayList();
+    }
+
+    public static synchronized DroneState getInstance() {
+        if (uniqueStateInstance == null) {
+            //System.out.println("Create Unique DroneState.");
+            uniqueStateInstance = new DroneState();
+        }
+        return uniqueStateInstance;
     }
 
     public boolean isInCommandMode() { return inCommandMode; }

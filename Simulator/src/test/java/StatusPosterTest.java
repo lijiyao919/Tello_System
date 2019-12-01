@@ -11,9 +11,8 @@ public class StatusPosterTest {
     public void testSendStatusMsg() throws Exception{
     //public static void main(String args[]) throws Exception{
         Message cmd= new Command();
-        DroneState ds = new DroneState();
         TelloComm tc = new MockTelloComm(cmd);
-        StatusPoster sp = new StatusPoster(ds, tc);
+        StatusPoster sp = new StatusPoster(tc);
         sp.sendStatusMsg();
 
 

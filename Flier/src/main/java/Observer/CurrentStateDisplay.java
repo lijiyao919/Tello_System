@@ -16,9 +16,9 @@ public class CurrentStateDisplay implements StateObserver, DisplayElement {
     private JTextArea text1 = new JTextArea(10,20);
     private Status sta;
 
-    public CurrentStateDisplay(StateSubject subject){
-        subject.registerObserver(this);
-        ds = (DroneState)subject;
+    public CurrentStateDisplay(){
+        ds = DroneState.getInstance();
+        ((StateSubject) ds).registerObserver(this);
     }
 
     @Override
