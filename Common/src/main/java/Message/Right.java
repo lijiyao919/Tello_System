@@ -3,14 +3,13 @@ package Message;
 public class Right extends Message{
     private String cmd;
 
-    //the lang of the software itself.
+    //the lang in specification.
     public static String getKeyWord() {
         return "right";
     }
 
-    //the lang in specification.
     protected Right(double value){
-        cmd = "right" + " " + StringUtils.formatDouble(value);
+        cmd = Right.getKeyWord() + " " + StringUtils.formatDouble(value);
         checkValues(value);
     }
 

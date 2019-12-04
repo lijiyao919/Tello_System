@@ -7,6 +7,7 @@ import Message.TakeOff;
 import Message.Land;
 import Message.Left;
 import Message.Right;
+import Message.ReplyOk;
 import State.DroneState;
 
 public abstract class Action {
@@ -35,7 +36,7 @@ public abstract class Action {
                 //System.out.println(String.format("Received %d bytes", bytesReceived.length));
                 reply = Message.decode(bytesReceived, 0, 1000);
                 //System.out.println("Receive " + reply.getMessageText());
-                if (reply.getMessageText().equals("ok")) {
+                if (reply.getMessageText().equals(ReplyOk.getKeyWord())) {
                     updateByCmdReply(msg);
                     return Boolean.TRUE;
                 }

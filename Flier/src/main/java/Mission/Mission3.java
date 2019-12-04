@@ -18,7 +18,7 @@ public class Mission3 extends Mission {
 
         //-------- rotate ---------
         if(ds.getBatteryPercentage()>=65){
-            result = doAction("cw 360");
+            result = doAction("rotate 360");
         }
         else{
             System.out.println("Rotate 360: The volumne of the battery is not enough...");

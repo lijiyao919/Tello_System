@@ -3,12 +3,11 @@ package Message;
 public class Land extends Message{
     private String cmd;
 
-    //the lang in specification.
     protected Land() {
-        cmd ="land";
+        cmd =Land.getKeyWord();
     }
 
-    //the lang of the software itself.
+    //the lang in specification.
     public static String getKeyWord() {
         return "land";
     }

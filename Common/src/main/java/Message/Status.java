@@ -1,7 +1,7 @@
 package Message;
 
 public class Status extends Message {
-    //the lang of the software itself
+    //the lang of spec
     public static String getKeyWord() { return "mid"; }
 
     private Integer pitch;

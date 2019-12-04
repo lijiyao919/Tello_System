@@ -3,14 +3,13 @@ package Message;
 public class Rotate extends Message{
     private String cmd;
 
-    //the lang of the software itself
+    //the lang in specification.
     public static String getKeyWord() {
         return "cw";
     }
 
-    //the lang in specification
     protected Rotate(double value){
-        cmd = "cw" + " " + StringUtils.formatDouble(value);
+        cmd = Rotate.getKeyWord() + " " + StringUtils.formatDouble(value);
         checkValues(value);
     }
 

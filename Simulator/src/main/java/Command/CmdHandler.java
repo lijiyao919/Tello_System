@@ -4,7 +4,8 @@ import Communicator.TelloComm;
 import State.DroneState;
 import Message.Message;
 import Message.Command;
-import Message.Reply;
+import Message.ReplyError;
+import Message.ReplyOk;
 
 public class CmdHandler {
     private TelloComm tc;
@@ -17,7 +18,7 @@ public class CmdHandler {
 
     public void handleCmdMsg() throws Exception {
         byte[] msg;
-        Message reply = Message.decode("error".getBytes(), 0 , 1000);
+        Message reply = Message.decode(ReplyError.getKeyWord().getBytes(), 0 , 1000);
 
         msg = tc.receiveMsg();
         if(msg != null) {
@@ -26,7 +27,7 @@ public class CmdHandler {
             if (tc.getSrcAddress() != null && tc.getSrcPort() >= 0) {
                 if (cmdMsg.isValid()) {
                     updateDroneState(cmdMsg);
-                    reply = Message.decode("ok".getBytes(), 0 , 1000);
+                    reply = Message.decode(ReplyOk.getKeyWord().getBytes(), 0 , 1000);
                 }
                 byte[] replyMsg = reply.encode();
                 tc.sendMsg(replyMsg, tc.getSrcAddress().getHostAddress(), tc.getSrcPort());

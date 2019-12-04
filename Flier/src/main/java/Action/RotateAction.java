@@ -1,10 +1,11 @@
 package Action;
 
 import Communicator.TelloComm;
+import Message.Rotate;
 
 public class RotateAction extends Action{
     protected RotateAction(TelloComm tc, double value) {
-        super(tc, "cw "+value);
+        super(tc, Rotate.getKeyWord() + " " + value);
     }
 
 
