@@ -6,6 +6,9 @@ import Mission.Mission1;
 import Mission.Mission2;
 import Mission.Mission3;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class DroneControl {
     private Mission[] missionArray;
 
@@ -13,9 +16,11 @@ public class DroneControl {
         missionArray = new Mission[] {new Mission1(tc), new Mission2(tc), new Mission3(tc)};
     }
 
-    public Boolean doMissions(int numberOfMission, int[] MissionChoice) throws Exception {
-        for(int i=0; i<numberOfMission; i++){
-            if (!missionArray[MissionChoice[i] - 1].executeMission()){
+    public Boolean doMissions(ArrayList MissionChoice) throws Exception {
+        Iterator iterator = MissionChoice.iterator();
+        while (iterator.hasNext()){
+            Long missionNumber = (Long) iterator.next();
+            if (!missionArray[(int) (missionNumber - 1)].executeMission()){
                 return false;
             }
         }

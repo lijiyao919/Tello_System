@@ -1,6 +1,9 @@
 import Communicator.TelloComm;
 import Control.DroneControl;
+import Import.ImportStrategy;
 import Monitor.StateMonitor;
+import Import.ImportFromJSON;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Flier {
@@ -9,24 +12,31 @@ public class Flier {
         TelloComm tcMonitor = new TelloComm( 8890);
         Runnable sm = new StateMonitor(tcMonitor);
         DroneControl dc = new DroneControl(tcControl);
-
-        int numberOfMission;
+        ArrayList<Long> MissionChoice = new ArrayList<Long>();
         Scanner input = new Scanner(System.in);
 
         //monitor state (receive state msg and update)
         Thread threadSM = new Thread(sm);
         threadSM.start();
 
-        //do mission
-        System.out.println("The number of the mission sequence:");
-        numberOfMission = input.nextInt();
+        System.out.println("Run missions manually?");
+        char manual = input.next().charAt(0);
 
-        System.out.println("Enter mission sequence:");
-        int[] MissionChoice = new int[numberOfMission];
-        for(int i=0; i<numberOfMission; i++){
-            MissionChoice[i]=input.nextInt();
+        if(manual == 'y'){
+            System.out.println("Input missions (end up with '#')");
+            while(true) {
+                char number = input.next().charAt(0);
+                if(number == '#') {
+                    break;
+                }
+                MissionChoice.add((long) (number-'0'));
+            }
+        }
+        else {
+            ImportStrategy ip = new ImportFromJSON();
+            ip.load(MissionChoice);
         }
 
-        dc.doMissions(numberOfMission, MissionChoice);
+        dc.doMissions(MissionChoice);
     }
 }
