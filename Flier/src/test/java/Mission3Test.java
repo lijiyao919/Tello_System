@@ -12,9 +12,9 @@ public class Mission3Test {
     public void testExecuteMissionSuccess() throws Exception{
         Boolean result;
         Message reply = Message.decode("ok".getBytes(), 0 , 1000);
-        TelloComm dc = new MockTelloComm(reply);
-        Mission m3 = new Mission3();
-        result = m3.executeMission(dc);
+        TelloComm tc = new MockTelloComm(reply);
+        Mission m3 = new Mission3(tc);
+        result = m3.executeMission();
         Assert.assertEquals(Boolean.TRUE, result);
     }
 
@@ -24,10 +24,10 @@ public class Mission3Test {
         Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         DroneState ds = DroneState.getInstance();
         TelloComm tc = new MockTelloComm( reply);
-        Mission m3 = new Mission3();
+        Mission m3 = new Mission3(tc);
 
         ds.consumeBattery(40);
-        result = m3.executeMission(tc);
+        result = m3.executeMission();
         Assert.assertEquals(Boolean.TRUE, result);
     }
 }

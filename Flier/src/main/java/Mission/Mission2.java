@@ -7,6 +7,11 @@ import Message.Message;
 import Message.Right;
 
 public class Mission2 extends Mission {
+
+    public Mission2(TelloComm tc) {
+        super(tc);
+    }
+
     @Override
     protected Boolean doCustomizedActions(TelloComm tc) throws Exception {
         Boolean result = Boolean.FALSE;
@@ -14,13 +19,10 @@ public class Mission2 extends Mission {
 
         //-------- right ---------
         if(ds.getBatteryPercentage()>=80){
-            System.out.println("Right 200...");
-            msg = Message.decode("right 200".getBytes(), 0 , 1000);;
-            result = executeBasicAction(tc, msg);
+            result = doAction("right 200");
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
-            Thread.sleep(5000);
         }
         else{
             System.out.println("Right 200: The volumne of the battery is not enough...");
@@ -31,13 +33,10 @@ public class Mission2 extends Mission {
 
         //-------- left ---------
         if(ds.getBatteryPercentage()>=80){
-            System.out.println("Left 200...");
-            msg = Message.decode("left 200".getBytes(), 0 , 1000);;
-            result = executeBasicAction(tc, msg);
+            result = doAction("left 200");
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
             }
-            Thread.sleep(5000);
         }
         else{
             System.out.println("Left 200: The volumne of the battery is not enough...");

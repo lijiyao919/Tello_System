@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class MissionTest {
 
-    @Test
+   /* @Test
     public void testExecuteBasicActionErrorReply() throws Exception{
         Message reply = Message.decode("error".getBytes(), 0 , 1000);
         Message cmd = Message.decode("command".getBytes(), 0 , 1000);
@@ -49,5 +49,5 @@ public class MissionTest {
         res = m1.executeMission(tc);
 
         Assert.assertTrue(res);
-    }
+    }*/
 }

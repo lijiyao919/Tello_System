@@ -12,9 +12,9 @@ public class Mission2Test {
     public void testExecuteMissionSuccess() throws Exception{
         Boolean result;
         Message reply = Message.decode("ok".getBytes(), 0 , 1000);
-        TelloComm dc = new MockTelloComm(reply);
-        Mission m2 = new Mission2();
-        result = m2.executeMission(dc);
+        TelloComm tc = new MockTelloComm(reply);
+        Mission m2 = new Mission2(tc);
+        result = m2.executeMission();
         Assert.assertEquals(Boolean.TRUE, result);
     }
 
@@ -24,10 +24,10 @@ public class Mission2Test {
         Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         DroneState ds = DroneState.getInstance();
         TelloComm tc = new MockTelloComm( reply);
-        Mission m2 = new Mission2();
+        Mission m2 = new Mission2(tc);
 
         ds.consumeBattery(25);
-        result = m2.executeMission(tc);
+        result = m2.executeMission();
         Assert.assertEquals(Boolean.TRUE, result);
     }
 }
