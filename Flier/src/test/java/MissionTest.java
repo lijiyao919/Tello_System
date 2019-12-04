@@ -13,8 +13,8 @@ public class MissionTest {
 
     @Test
     public void testExecuteBasicActionErrorReply() throws Exception{
-        Message reply = new Reply("error");
-        Message cmd = new Command();
+        Message reply = Message.decode("error".getBytes(), 0 , 1000);
+        Message cmd = Message.decode("command".getBytes(), 0 , 1000);
         TelloComm tc= new MockTelloComm(reply);
         Mission m1 = new Mission1();
         Boolean res;
@@ -26,7 +26,7 @@ public class MissionTest {
 
     @Test
     public void testExecuteBasicActionNullMsg() throws Exception{
-        Message cmd = new Command();
+        Message cmd = Message.decode("command".getBytes(), 0 , 1000);
         TelloComm tc= new MockTelloComm(null);
         Mission m1 = new Mission1();
         Boolean res;
@@ -39,8 +39,7 @@ public class MissionTest {
 
     @Test
     public void testTakeoffNotBattery() throws Exception{
-        Message reply = new Reply("ok");
-        Message cmd = new Command();
+        Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         TelloComm tc= new MockTelloComm(reply);
         DroneState ds = DroneState.getInstance();
         ds.consumeBattery(50);

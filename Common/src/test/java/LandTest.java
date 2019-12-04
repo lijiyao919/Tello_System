@@ -3,6 +3,8 @@ import Message.Message;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class LandTest{
     @Test
     public void testGetKeyWord(){
@@ -10,27 +12,20 @@ public class LandTest{
     }
 
     @Test
-    public void testGetMessageTest(){
-        Message cmd = new Land();
-        Assert.assertEquals("land", cmd.getMessageText());
+    public void testConstructMsg(){
+        Message cmd = Message.decode("land".getBytes(), 0 , 1000);
+        Assert.assertEquals("Land land", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertTrue(cmd.isValid());
     }
+
+
 
     @Test
-    public void testGetMessageType(){
-        Message cmd = new Land();
-        Assert.assertEquals("command", cmd.getMessageType());
+    public void testEncodeMsg(){
+        Message cmd = Message.decode("land".getBytes(), 0, 1000);
+        byte[] encodeMsg = cmd.encode();
+        Assert.assertEquals(Arrays.toString("land".getBytes()), Arrays.toString(encodeMsg));
     }
 
-    @Test
-    public void testEncodeAndDecodeCmdMsg(){
-        Message cmd = new Land();
-        byte[] encodeMsg;
-        Message decodeMsg;
-
-        encodeMsg = cmd.encode();
-        decodeMsg = cmd.decode(encodeMsg, 0, 1000);
-
-        Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
-
-    }
 }

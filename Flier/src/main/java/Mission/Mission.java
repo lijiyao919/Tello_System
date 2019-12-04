@@ -24,7 +24,7 @@ public abstract class Mission {
             bytesReceived = tc.receiveMsg();
             if (bytesReceived != null) {
                 //System.out.println(String.format("Received %d bytes", bytesReceived.length));
-                reply = Status.decode(bytesReceived, 0, 1000);
+                reply = Message.decode(bytesReceived, 0, 1000);
                 //System.out.println("Receive " + reply.getMessageText());
                 if (reply.getMessageText().equals("ok")) {
                     updateByCmdReply(msg);
@@ -68,7 +68,7 @@ public abstract class Mission {
         Message msg;
 
         System.out.println("Command mode...");
-        msg = new Command();
+        msg = Message.decode("command".getBytes(), 0 , 1000);
         result= executeBasicAction(tc, msg);
         Thread.sleep(5000);
         return result;
@@ -80,7 +80,7 @@ public abstract class Mission {
 
         if(ds.getBatteryPercentage() >= 60){
             System.out.println("Take off...");
-            msg = new TakeOff();
+            msg = Message.decode("takeoff".getBytes(), 0 , 1000);
             result= executeBasicAction(tc, msg);
             Thread.sleep(5000);
             return result;
@@ -97,7 +97,7 @@ public abstract class Mission {
         Message msg;
 
         System.out.println("Land...");
-        msg = new Land();
+        msg = Message.decode("land".getBytes(), 0 , 1000);;
         result= executeBasicAction(tc, msg);
         Thread.sleep(5000);
         return result;

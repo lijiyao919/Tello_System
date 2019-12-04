@@ -1,9 +1,4 @@
 package Message;
-
-import MessageFactory.MessageFactory;
-import MessageFactory.StatusMessageFactory;
-import MessageFactory.CommandMessageFactory;
-import MessageFactory.ReplyMessageFactory;
 import java.nio.charset.StandardCharsets;
 
 public abstract class Message {
@@ -25,8 +20,11 @@ public abstract class Message {
                      data.startsWith(Left.getKeyWord()) || data.startsWith(Right.getKeyWord()) || data.startsWith(Rotate.getKeyWord())){
                 mf = new CommandMessageFactory();
             }
-            else{
+            else if (data.startsWith(ReplyOk.getKeyWord()) || data.startsWith(ReplyError.getKeyWord())) {
                 mf = new ReplyMessageFactory();
+            }
+            else {
+                throw new UnsupportedOperationException();
             }
             message = mf.createMsg(data);
         }

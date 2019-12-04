@@ -11,9 +11,8 @@ import org.junit.Test;
 public class CmdHandlerTest {
     @Test
     public void testHandleCmdMsgSuccess() throws Exception {
-        //public static void main(String args[]) throws Exception{
-        Message cmd = new Command();
-        Message left = new Left("left 100");
+        Message cmd = Message.decode("command".getBytes(), 0, 1000);
+        Message left = Message.decode("left 100".getBytes(), 0, 1000);
         DroneState ds = DroneState.getInstance();
         TelloComm tc1 = new MockTelloComm(cmd);
         TelloComm tc2 = new MockTelloComm(left);

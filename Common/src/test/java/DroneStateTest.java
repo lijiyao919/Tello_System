@@ -1,3 +1,4 @@
+import Message.Message;
 import Mock.MockObserver;
 import State.DroneState;
 import State.StateObserver;
@@ -111,7 +112,7 @@ public class DroneStateTest {
                 "bat:70;baro:30.00;"+
                 "time:50;"+
                 "agx:10.00;agy:10.00;agz:10.10";
-        Status status= new Status(stat);
+        Status status = (Status) Message.decode(stat.getBytes(), 0, 1000);
         ds.updateFlyingInfo(status);
 
         Assert.assertEquals(10, ds.getPitch().intValue());

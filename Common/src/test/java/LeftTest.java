@@ -3,6 +3,8 @@ import Message.Message;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class LeftTest{
     @Test
     public void testGetKeyWord(){
@@ -10,34 +12,27 @@ public class LeftTest{
     }
 
     @Test
-    public void testGetMessageText(){
-        Message cmd = new Left("left 200");
-        Assert.assertEquals("left 200", cmd.getMessageText());
+    public void testConstructMsgSuccess(){
+        Message cmd = Message.decode("left 200".getBytes(), 0 , 1000);
+        Assert.assertEquals("Left left 200.00", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertTrue(cmd.isValid());
     }
 
     @Test
-    public void testGetMessageType(){
-        Message cmd = new Left("left 200");
-        Assert.assertEquals("command", cmd.getMessageType());
+    public void testConstructMsgFailure(){
+        Message cmd = Message.decode("left 700".getBytes(), 0 , 1000);
+        Assert.assertEquals("Left left 700.00", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertFalse(cmd.isValid());
     }
 
-    @Test
-    public void testEncodeAndDecodeCmdMsg(){
-        Message cmd = new Left("left 200");
-        byte[] encodeMsg;
-        Message decodeMsg;
-
-        encodeMsg = cmd.encode();
-        decodeMsg = cmd.decode(encodeMsg, 0, 1000);
-
-        Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
-
-    }
 
     @Test
-    public void testConstructWithInvalidParameter(){
-        Message cmd = new Left("left 700");
-        Assert.assertEquals(Boolean.FALSE, cmd.isValid());
+    public void testEncodeMsg(){
+        Message cmd = Message.decode("left 200".getBytes(), 0, 1000);
+        byte[] encodeMsg = cmd.encode();
+        Assert.assertEquals(Arrays.toString("left 200.00".getBytes()), Arrays.toString(encodeMsg));
     }
 
 }

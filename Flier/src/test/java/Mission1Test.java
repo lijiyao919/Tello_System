@@ -11,7 +11,7 @@ public class Mission1Test {
     @Test
     public void testExecuteMissionSuccess() throws Exception{
         Boolean result = Boolean.FALSE;
-        Message reply = new Reply("ok");
+        Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         TelloComm dc = new MockTelloComm(reply);
         Mission m1 = new Mission1();
         result = m1.executeMission(dc);
@@ -21,7 +21,7 @@ public class Mission1Test {
     @Test
     public void testDoCustomizedActionNotBattery() throws Exception{
         Boolean result = Boolean.FALSE;
-        Message reply = new Reply("ok");
+        Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         DroneState ds = DroneState.getInstance();
         TelloComm tc = new MockTelloComm( reply);
         Mission m1 = new Mission1();

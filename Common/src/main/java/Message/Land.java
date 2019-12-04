@@ -1,15 +1,21 @@
 package Message;
 
-import Message.Message;
-
 public class Land extends Message{
-    private String cmd ="land";
+    private String cmd;
 
-    public static String getKeyWord() { return "land"; }
+    //the lang in specification.
+    protected Land() {
+        cmd ="land";
+    }
+
+    //the lang of the software itself.
+    public static String getKeyWord() {
+        return "land";
+    }
 
     @Override
     public String getMessageType() {
-        return "command";
+        return "cmd";
     }
 
     @Override

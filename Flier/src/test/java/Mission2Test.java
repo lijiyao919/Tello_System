@@ -10,8 +10,8 @@ import org.junit.Test;
 public class Mission2Test {
     @Test
     public void testExecuteMissionSuccess() throws Exception{
-        Boolean result = Boolean.TRUE;
-        Message reply = new Reply("ok");
+        Boolean result;
+        Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         TelloComm dc = new MockTelloComm(reply);
         Mission m2 = new Mission2();
         result = m2.executeMission(dc);
@@ -20,8 +20,8 @@ public class Mission2Test {
 
     @Test
     public void testDoCustomizedActionNotBattery() throws Exception{
-        Boolean result = Boolean.TRUE;
-        Message reply = new Reply("ok");
+        Boolean result;
+        Message reply = Message.decode("ok".getBytes(), 0 , 1000);
         DroneState ds = DroneState.getInstance();
         TelloComm tc = new MockTelloComm( reply);
         Mission m2 = new Mission2();

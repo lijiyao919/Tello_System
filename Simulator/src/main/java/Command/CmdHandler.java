@@ -17,7 +17,7 @@ public class CmdHandler {
 
     public void handleCmdMsg() throws Exception {
         byte[] msg;
-        Message reply = new Reply("error");
+        Message reply = Message.decode("error".getBytes(), 0 , 1000);
 
         msg = tc.receiveMsg();
         if(msg != null) {
@@ -26,7 +26,7 @@ public class CmdHandler {
             if (tc.getSrcAddress() != null && tc.getSrcPort() >= 0) {
                 if (cmdMsg.isValid()) {
                     updateDroneState(cmdMsg);
-                    reply = new Reply("ok");
+                    reply = Message.decode("ok".getBytes(), 0 , 1000);
                 }
                 byte[] replyMsg = reply.encode();
                 tc.sendMsg(replyMsg, tc.getSrcAddress().getHostAddress(), tc.getSrcPort());

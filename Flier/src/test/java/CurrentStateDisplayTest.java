@@ -1,6 +1,7 @@
 import Observer.CurrentStateDisplay;
 import State.DroneState;
 import Message.Status;
+import Message.Message;
 import org.junit.Test;
 
 public class CurrentStateDisplayTest {
@@ -16,7 +17,7 @@ public class CurrentStateDisplayTest {
                 "bat:100;baro:0;"+
                 "time:0;"+
                 "agx:0;agy:%s;agz:0";
-        Status sta = new Status(msg);
+        Status sta = (Status) Message.decode(msg.getBytes(), 0 , 1000);
         ds.updateFlyingInfo(sta);
 
     }

@@ -13,8 +13,8 @@ public class Mission3 extends Mission {
 
         //-------- rotate ---------
         if(ds.getBatteryPercentage()>=65){
-            System.out.println("cw 360...");
-            msg = new Rotate("cw 360");
+            System.out.println("Rotate 360...");
+            msg = Message.decode("cw 360".getBytes(), 0 , 1000);;
             result = executeBasicAction(tc, msg);
             Thread.sleep(5000);
         }

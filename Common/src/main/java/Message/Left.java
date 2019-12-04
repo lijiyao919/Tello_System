@@ -1,20 +1,19 @@
 package Message;
 
-import Message.Message;
-
 public class Left extends Message{
     private String cmd;
 
-    public static String getKeyWord() { return "left"; }
-
-    public Left(String data){
-        cmd = data;
-        checkValues();
+    //the lang of the software itself
+    public static String getKeyWord() {
+        return "left";
     }
 
-    private void checkValues(){
-        String[] cmdFields = cmd.trim().split(" ");
-        double value = Double.parseDouble(cmdFields[1]);
+    protected Left(double value){
+        cmd = "left" + " " + StringUtils.formatDouble(value);
+        checkValues(value);
+    }
+
+    private void checkValues(double value){
         if(value<20 || value>500 ){
             setIsValid(Boolean.FALSE);
         }
@@ -22,7 +21,7 @@ public class Left extends Message{
 
     @Override
     public String getMessageType() {
-        return "command";
+        return "cmd";
     }
 
     @Override

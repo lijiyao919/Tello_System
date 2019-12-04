@@ -3,6 +3,8 @@ import Message.Rotate;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class RotateTest{
     @Test
     public void testGetKeyWord(){
@@ -10,33 +12,29 @@ public class RotateTest{
     }
 
     @Test
-    public void testGetMessageTest(){
-        Message cmd = new Rotate("cw 360");
-        Assert.assertEquals("cw 360", cmd.getMessageText());
+    public void testConstructMsgSuccess(){
+        Message cmd = Message.decode("cw 360".getBytes(), 0 , 1000);
+        Assert.assertEquals("Rotate cw 360.00", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertTrue(cmd.isValid());
     }
 
     @Test
-    public void testGetMessageType(){
-        Message cmd = new Rotate("cw 360");
-        Assert.assertEquals("command", cmd.getMessageType());
+    public void testConstructMsgFailure(){
+        Message cmd = Message.decode("cw 700".getBytes(), 0 , 1000);
+        Assert.assertEquals("Rotate cw 700.00", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertFalse(cmd.isValid());
     }
+
 
     @Test
-    public void testEncodeAndDecodeCmdMsg(){
-        Message cmd = new Rotate("cw 360");
-        byte[] encodeMsg;
-        Message decodeMsg;
-
-        encodeMsg = cmd.encode();
-        decodeMsg = Message.decode(encodeMsg, 0, 1000);
-
-        Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
-
+    public void testEncodeMsg(){
+        Message cmd = Message.decode("cw 700".getBytes(), 0, 1000);
+        byte[] encodeMsg = cmd.encode();
+        Assert.assertEquals(Arrays.toString("cw 700.00".getBytes()), Arrays.toString(encodeMsg));
     }
 
-    @Test
-    public void testConstructWithInvalidParameter(){
-        Message cmd = new Rotate("cw 600");
-        Assert.assertEquals(Boolean.FALSE, cmd.isValid());
-    }
+
+
 }

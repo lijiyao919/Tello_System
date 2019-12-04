@@ -10,7 +10,6 @@ import org.junit.Test;
 public class StateMonitorTest {
     @Test
     public void testUpdate() throws Exception{
-        byte[] encodeMsg;
         String stat = "mid:-1;x:0;y:0;z:0;mpry:0,0,0;pitch:10;roll:60;yaw:30;"+
                 "vgx:20;vgy:20;vgz:20;"+
                 "templ:70;temph:100;"+
@@ -18,7 +17,7 @@ public class StateMonitorTest {
                 "bat:70;baro:30.00;"+
                 "time:50;"+
                 "agx:10.00;agy:10.00;agz:10.10";
-        Message staMsg = new Status(stat);
+        Message staMsg = Message.decode(stat.getBytes(), 0 , 1000);
         TelloComm tc = new MockTelloComm(staMsg);
         DroneState ds = DroneState.getInstance();
         StateMonitor sm = new StateMonitor(tc);

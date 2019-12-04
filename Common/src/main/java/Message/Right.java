@@ -3,16 +3,18 @@ package Message;
 public class Right extends Message{
     private String cmd;
 
-    public static String getKeyWord() { return "right"; }
-
-    public Right(String data){
-        cmd = data;
-        checkValues();
+    //the lang of the software itself.
+    public static String getKeyWord() {
+        return "right";
     }
 
-    private void checkValues(){
-        String[] cmdFields = cmd.trim().split(" ");
-        double value = Double.parseDouble(cmdFields[1]);
+    //the lang in specification.
+    protected Right(double value){
+        cmd = "right" + " " + StringUtils.formatDouble(value);
+        checkValues(value);
+    }
+
+    private void checkValues(double value){
         if(value<20 || value>500 ){
             setIsValid(Boolean.FALSE);
         }
@@ -20,7 +22,7 @@ public class Right extends Message{
 
     @Override
     public String getMessageType() {
-        return "command";
+        return "cmd";
     }
 
     @Override

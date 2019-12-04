@@ -3,16 +3,18 @@ package Message;
 public class Rotate extends Message{
     private String cmd;
 
-    public static String getKeyWord() { return "cw"; }
-
-    public Rotate(String data){
-        cmd = data;
-        checkValues();
+    //the lang of the software itself
+    public static String getKeyWord() {
+        return "cw";
     }
 
-    private void checkValues(){
-        String[] cmdFields = cmd.trim().split(" ");
-        double value = Double.parseDouble(cmdFields[1]);
+    //the lang in specification
+    protected Rotate(double value){
+        cmd = "cw" + " " + StringUtils.formatDouble(value);
+        checkValues(value);
+    }
+
+    private void checkValues(double value){
         if(value<20 || value>500 ){
             setIsValid(Boolean.FALSE);
         }
@@ -20,7 +22,7 @@ public class Rotate extends Message{
 
     @Override
     public String getMessageType() {
-        return "command";
+        return "cmd";
     }
 
     @Override

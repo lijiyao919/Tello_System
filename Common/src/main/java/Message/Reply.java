@@ -1,19 +1,14 @@
 package Message;
 
-public class Reply extends Message {
-    private String key;
+public abstract class Reply extends Message {
+    protected String ack;
 
-    public Reply(String data){
-        key=data;
+    protected Reply(String ack) {
+        this.ack = ack;
     }
 
     @Override
     public String getMessageType() {
-        return "reply";
-    }
-
-    @Override
-    public String getMessageText() {
-        return key;
+        return "re";
     }
 }

@@ -3,6 +3,8 @@ import Message.Right;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class RightTest{
     @Test
     public void testGetKeyWord(){
@@ -10,33 +12,27 @@ public class RightTest{
     }
 
     @Test
-    public void testGetMessageTest(){
-        Message cmd = new Right("right 200");
-        Assert.assertEquals("right 200", cmd.getMessageText());
+    public void testConstructMsgSuccess(){
+        Message cmd = Message.decode("right 200".getBytes(), 0 , 1000);
+        Assert.assertEquals("Right right 200.00", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertTrue(cmd.isValid());
     }
 
     @Test
-    public void testGetMessageType(){
-        Message cmd = new Right("right 200");
-        Assert.assertEquals("command", cmd.getMessageType());
+    public void testConstructMsgFailure(){
+        Message cmd = Message.decode("right 700".getBytes(), 0 , 1000);
+        Assert.assertEquals("Right right 700.00", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertFalse(cmd.isValid());
     }
+
 
     @Test
-    public void testEncodeAndDecodeCmdMsg(){
-        Message cmd = new Right("right 200");
-        byte[] encodeMsg;
-        Message decodeMsg;
-
-        encodeMsg = cmd.encode();
-        decodeMsg = cmd.decode(encodeMsg, 0, 1000);
-
-        Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
-
+    public void testEncodeMsg(){
+        Message cmd = Message.decode("right 200".getBytes(), 0, 1000);
+        byte[] encodeMsg = cmd.encode();
+        Assert.assertEquals(Arrays.toString("right 200.00".getBytes()), Arrays.toString(encodeMsg));
     }
 
-    @Test
-    public void testConstructWithInvalidParameter(){
-        Message cmd = new Right("right 700");
-        Assert.assertEquals(Boolean.FALSE, cmd.isValid());
-    }
 }

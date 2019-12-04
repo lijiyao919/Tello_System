@@ -1,13 +1,21 @@
 package Message;
 
 public class TakeOff extends Message{
-    private String cmd ="takeoff";
+    private String cmd;
 
-    public static String getKeyWord() { return "takeoff"; }
+    //the lang in specification
+    protected TakeOff() {
+        cmd ="takeoff";
+    }
+
+    //the lang of the software itself
+    public static String getKeyWord() {
+        return "takeoff";
+    }
 
     @Override
     public String getMessageType() {
-        return "command";
+        return "cmd";
     }
 
     @Override

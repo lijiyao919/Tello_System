@@ -2,35 +2,28 @@ import Message.Message;
 import Message.Command;
 import org.junit.Assert;
 import org.junit.Test;
+import java.util.Arrays;
 
 public class CommandTest{
+
     @Test
     public void testGetKeyWord(){
         Assert.assertEquals("command", Command.getKeyWord());
     }
 
     @Test
-    public void testGetMessageTest(){
-        Message cmd = new Command();
-        Assert.assertEquals("command", cmd.getMessageText());
+    public void testConstructMsg(){
+        Message cmd = Message.decode("command".getBytes(), 0 , 1000);
+        Assert.assertEquals("Command command", cmd.toString());
+        Assert.assertEquals("cmd", cmd.getMessageType());
+        Assert.assertTrue(cmd.isValid());
     }
 
     @Test
-    public void testGetMessageType(){
-        Message cmd = new Command();
-        Assert.assertEquals("command", cmd.getMessageType());
+    public void testEncodeMsg(){
+        Message cmd = Message.decode("command".getBytes(), 0, 1000);
+        byte[] encodeMsg = cmd.encode();
+        Assert.assertEquals(Arrays.toString("command".getBytes()), Arrays.toString(encodeMsg));
     }
 
-    @Test
-    public void testEncodeAndDecodeCmdMsg(){
-        Message cmd = new Command();
-        byte[] encodeMsg;
-        Message decodeMsg;
-
-        encodeMsg = cmd.encode();
-        decodeMsg = cmd.decode(encodeMsg, 0, 1000);
-
-        Assert.assertEquals(cmd.getMessageText(), decodeMsg.getMessageText());
-
-    }
 }

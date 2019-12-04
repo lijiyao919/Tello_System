@@ -15,7 +15,7 @@ public class Mission2 extends Mission {
         //-------- right ---------
         if(ds.getBatteryPercentage()>=80){
             System.out.println("Right 200...");
-            msg = new Left("right 200");
+            msg = Message.decode("right 200".getBytes(), 0 , 1000);;
             result = executeBasicAction(tc, msg);
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;
@@ -32,7 +32,7 @@ public class Mission2 extends Mission {
         //-------- left ---------
         if(ds.getBatteryPercentage()>=80){
             System.out.println("Left 200...");
-            msg = new Right("left 200");
+            msg = Message.decode("left 200".getBytes(), 0 , 1000);;
             result = executeBasicAction(tc, msg);
             if(result == Boolean.FALSE) {
                 return Boolean.FALSE;

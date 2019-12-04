@@ -1,6 +1,7 @@
 package Message;
 
 public class Status extends Message {
+    //the lang of the software itself
     public static String getKeyWord() { return "mid"; }
 
     private Integer pitch;
@@ -42,7 +43,7 @@ public class Status extends Message {
         this.accelerationZ = accelerationZ;
     }
 
-    public Status(String data) {
+    protected Status(String data) {
         parseData(data);
     }
 
