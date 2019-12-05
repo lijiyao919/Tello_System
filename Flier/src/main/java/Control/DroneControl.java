@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DroneControl {
-    private Mission[] missionArray;
+    private ArrayList<Mission> missionArray;
 
     public DroneControl(TelloComm tc) {
-        missionArray = new Mission[] {new Mission1(tc), new Mission2(tc), new Mission3(tc)};
+        missionArray = new ArrayList<Mission>();
+        missionArray.add(new Mission1(tc));
+        missionArray.add(new Mission2(tc));
+        missionArray.add(new Mission3(tc));
     }
 
     public Boolean doMissions(ArrayList MissionChoice) throws Exception {
         Iterator iterator = MissionChoice.iterator();
         while (iterator.hasNext()){
             Long missionNumber = (Long) iterator.next();
-            if (!missionArray[(int) (missionNumber - 1)].executeMission()){
+            if (!missionArray.get((int) (missionNumber - 1)).executeMission()){
                 return false;
             }
         }
