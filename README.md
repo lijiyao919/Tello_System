@@ -20,3 +20,6 @@
 * We encapsulate constructor of all kinds of actions as protected, so users can only use create method in the factory to create actions.
 * Separated the specification language in the factory such that our own language in the software not affected by the change of specification.
 
+### 5. Applying ArrayList to store the missions.
+* Iterator Pattern can be used such that decreasing coupling between user and array storage.
+
